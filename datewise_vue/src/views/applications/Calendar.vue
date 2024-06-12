@@ -3,36 +3,19 @@
     <base-header class="pb-6 content__title content__title--calendar">
       <div class="row align-items-center py-4">
         <div class="col-lg-6 mt-3 mt-lg-0 text-lg-right">
-          <a
-            href="#"
-            @click.prevent="prev"
-            class="fullcalendar-btn-prev btn btn-sm btn-default"
-          >
+          <a href="#" @click.prevent="prev" class="fullcalendar-btn-prev btn btn-sm btn-default">
             <i class="fas fa-angle-left"></i>
           </a>
-          <a
-            href="#"
-            @click.prevent="next"
-            class="fullcalendar-btn-next btn btn-sm btn-default"
-          >
+          <a href="#" @click.prevent="next" class="fullcalendar-btn-next btn btn-sm btn-default">
             <i class="fas fa-angle-right"></i>
           </a>
-          <base-button
-            class="btn btn-sm btn-default"
-            @click="changeView('dayGridMonth')"
-          >
+          <base-button class="btn btn-sm btn-default" @click="changeView('dayGridMonth')">
             Month
           </base-button>
-          <base-button
-            class="btn btn-sm btn-default"
-            @click="changeView('dayGridWeek')"
-          >
+          <base-button class="btn btn-sm btn-default" @click="changeView('dayGridWeek')">
             Week
           </base-button>
-          <base-button
-            class="btn btn-sm btn-default"
-            @click="changeView('timeGridDay')"
-          >
+          <base-button class="btn btn-sm btn-default" @click="changeView('timeGridDay')">
             Day
           </base-button>
         </div>
@@ -48,6 +31,7 @@
             <div class="card-header">
               <!-- Title -->
               <h5 class="h3 mb-0">Calendar</h5>
+              <img src="@/assets/search_ic.svg" @click="goToSearch">
             </div>
             <!-- Card body -->
             <div class="card-body p-5 card-calendar-body">
@@ -60,30 +44,15 @@
 
     <modal v-model:show="showAddModal" modal-classes="modal-secondary">
       <form class="new-event--form" @submit.prevent="saveEvent">
-        <base-input
-          name="title"
-          label="Event title"
-          placeholder="Event Title"
-          v-model="model.title"
-          input-classes="form-control-alternative new-event--title"
-        >
+        <base-input name="title" label="Event title" placeholder="Event Title" v-model="model.title"
+          input-classes="form-control-alternative new-event--title">
         </base-input>
         <div class="form-group">
           <label class="form-control-label d-block mb-3">Status color</label>
           <div class="btn-group btn-group-toggle btn-group-colors event-tag">
-            <label
-              v-for="color in eventColors"
-              :key="color"
-              class="btn"
-              :class="[color, { 'active focused': model.className === color }]"
-            >
-              <input
-                v-model="model.className"
-                type="radio"
-                name="event-tag"
-                :value="color"
-                autocomplete="off"
-              />
+            <label v-for="color in eventColors" :key="color" class="btn"
+              :class="[color, { 'active focused': model.className === color }]">
+              <input v-model="model.className" type="radio" name="event-tag" :value="color" autocomplete="off" />
             </label>
           </div>
         </div>
@@ -92,18 +61,10 @@
       </form>
 
       <template v-slot:footer>
-        <button
-          type="submit"
-          class="btn btn-primary new-event--add"
-          @click="saveEvent"
-        >
+        <button type="submit" class="btn btn-primary new-event--add" @click="saveEvent">
           Add event
         </button>
-        <button
-          type="button"
-          class="btn btn-link ml-auto"
-          @click="showAddModal = false"
-        >
+        <button type="button" class="btn btn-link ml-auto" @click="showAddModal = false">
           Close
         </button>
       </template>
@@ -111,40 +72,23 @@
 
     <modal v-model:show="showEditModal" modal-classes="modal-secondary">
       <form class="edit-event--form" @submit.prevent="editEvent">
-        <base-input
-          name="title2"
-          label="Event title"
-          placeholder="Event Title"
-          v-model="model.title"
-          input-classes="form-control-alternative new-event--title"
-        >
+        <base-input name="title2" label="Event title" placeholder="Event Title" v-model="model.title"
+          input-classes="form-control-alternative new-event--title">
         </base-input>
         <div class="form-group">
           <label class="form-control-label d-block mb-3">Status color</label>
           <div class="btn-group btn-group-toggle btn-group-colors event-tag">
-            <label
-              v-for="color in eventColors"
-              :key="color"
-              class="btn"
-              :class="[color, { 'active focused': model.className === color }]"
-            >
-              <input
-                v-model="model.className"
-                type="radio"
-                name="event-tag"
-                :value="color"
-                autocomplete="off"
-              />
+            <label v-for="color in eventColors" :key="color" class="btn"
+              :class="[color, { 'active focused': model.className === color }]">
+              <input v-model="model.className" type="radio" name="event-tag" :value="color" autocomplete="off" />
             </label>
           </div>
         </div>
         <base-input name="textarea" label="Description">
-          <textarea
-            v-model="model.description"
+          <textarea v-model="model.description"
             class="form-control form-control-alternative edit-event--description textarea-autosize"
-            placeholder="Event Desctiption"
-          >
-          </textarea>
+            placeholder="Event Desctiption">
+      </textarea>
           <i class="form-group--bar"></i>
         </base-input>
         <input type="hidden" class="new-event--start" />
@@ -152,17 +96,9 @@
       </form>
 
       <template v-slot:footer>
-        <base-button
-          native-type="submit"
-          type="primary"
-          class="new-event--add"
-          @click="editEvent"
-          >Update</base-button
-        >
+        <base-button native-type="submit" type="primary" class="new-event--add" @click="editEvent">Update</base-button>
         <base-button type="danger" @click="deleteEvent">Delete</base-button>
-        <base-button type="link" class="ml-auto" @click="showAddModal = false"
-          >Close</base-button
-        >
+        <base-button type="link" class="ml-auto" @click="showAddModal = false">Close</base-button>
       </template>
     </modal>
   </div>
@@ -339,6 +275,12 @@ export default {
       }
       this.showEditModal = false;
     },
+    goToSearch() {
+      this.$router.push({
+        name: 'Search'
+      });
+    }
+
   },
   mounted() {
     this.initCalendar();
@@ -349,3 +291,12 @@ export default {
 <!-- <style lang="scss">
 @import "~@/assets/sass/core/vendors/fullcalendar";
 </style> -->
+<style scoped>
+img {
+  box-decoration-break: none;
+  display: block;
+  margin-right: 10px;
+  float: right;
+  width: 5%;
+}
+</style>
