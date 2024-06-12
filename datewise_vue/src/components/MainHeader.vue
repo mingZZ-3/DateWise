@@ -15,8 +15,8 @@
         </div>
     
         <div class="mt-n5 mb-2">
-            <h2 style="text-align: center; color: black; letter-spacing: 2px;">Home Head</h2>
-            <h5 style="text-align: center; color: #827B7D; letter-spacing: 2px;">Our Beautiful And Wise Story of Moth</h5>
+            <h2 style="text-align: center; color: black; letter-spacing: 2px;">Emily ♥ Ethan</h2>
+            <h5 style="text-align: center; color: #827B7D; letter-spacing: 2px;">Our Beautiful And Wise Story of Month</h5>
         </div>
         
       </div>
