@@ -1,4 +1,5 @@
 <template>
+    <Header title="Search" type="5"/>
     <div class="container">
         <div class="py-4 container">
             <div class="card">
@@ -86,6 +87,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import DataTables from '../applications//DataTables.vue'
+import Header from '@/components/Header.vue'
+
 
 const today = new Date();
 const todayString = today.toISOString().split('T')[0];
