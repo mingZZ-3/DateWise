@@ -1,18 +1,25 @@
 <template>
-    <div class="row">
-      <div class="col-xl-9">
-        <div class="card card-calendar">
-          <calendar id="calendar-table" />
-        </div>
+  <div class="card">
+      <calendar id="calendar-table" />
+  </div>
+
+  <div class="card mt-5">
+      <div class="card-header">
+          <h5 class="mb-0" style="color: #380A15; font-size: 20px;">Result</h5>
       </div>
-    </div>
+      <DataTables :data="filteredData" />
+  </div>
 </template>
 
 <script>
 import Calendar from "@/views/applications/Calendar.vue";
+import DataTables from '../applications//DataTables.vue'
 
 export default {
   name: "CalendarPage",
-  components: { Calendar, },
+  components: { 
+    Calendar,
+    DataTables,
+  },
 };
 </script>

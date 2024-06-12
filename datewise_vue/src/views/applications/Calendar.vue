@@ -39,7 +39,7 @@
       </div>
     </base-header>
 
-    <div class="container-fluid mt--6">
+    <div class="container mt-5">
       <div class="row">
         <div class="col">
           <!-- Fullcalendar -->
@@ -50,7 +50,7 @@
               <h5 class="h3 mb-0">Calendar</h5>
             </div>
             <!-- Card body -->
-            <div class="card-body p-0 card-calendar-body">
+            <div class="card-body p-5 card-calendar-body">
               <div id="fullCalendar"></div>
             </div>
           </div>
