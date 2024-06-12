@@ -25,7 +25,7 @@
           alt="main_logo"
         />
         <span class="ms-1 font-weight-bold text-white"
-          >Material Dashboard 2 PRO</span
+          > Date Wise</span
         >
       </router-link>
     </div>
@@ -35,7 +35,7 @@
 </template>
 <script>
 import SidenavList from "./SidenavList.vue";
-import logo from "@/assets/img/logo-ct.png";
+import logo from "@/assets/img/logo_white.png";
 import logoDark from "@/assets/img/logo-ct-dark.png";
 import { mapState } from "vuex";
 export default {
