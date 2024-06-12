@@ -1,95 +1,83 @@
 <template>
     <div class="container">
         <div class="py-4 container-fluid">
-            <div class="mt-4 row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="filter-container">
-                            <div class="filter-group period-group">
-                                <label class="label_txt">Set Period :</label>
-                                <div class="container text-left">
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-10">
-                                            <form action="#" class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="date" id="startDate"
-                                                            class="datepicker form-control" placeholder="Start Date"
-                                                            v-model="filters.startDate">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="date" id="endDate" class="datepicker form-control"
-                                                            placeholder="End Date" v-model="filters.endDate">
-                                                    </div>
-                                                </div>
-                                            </form>
+            <div class="card">
+                <div class="filter-container">
+                    <div class="filter-group period-group">
+                        <label class="label_txt">Set Period :</label>
+                        <div class="container text-left">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10">
+                                    <form action="#" class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="date" id="startDate" class="datepicker form-control"
+                                                    placeholder="Start Date" v-model="filters.startDate">
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="date" id="endDate" class="datepicker form-control"
+                                                    placeholder="End Date" v-model="filters.endDate">
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="filter-group">
-                                <label class="label_txt">Type :</label>
-                                <div class="radio-group">
-                                    <input type="radio" id="spending" value="Spending" v-model="filters.type" checked>
-                                    <label for="spending">Spending</label>
-                                    <input type="radio" id="income" value="Income" v-model="filters.type">
-                                    <label for="income">Income</label>
-                                </div>
-                            </div>
-                            <hr v-if="filters.type">
-                            <div class="filter-group" v-if="filters.type === 'Spending'">
-                                <label class="label_txt">Payment method :</label>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="debit" value="Debit card"
-                                        v-model="filters.paymentMethod">
-                                    <label for="debit">Debit card</label>
-                                    <input type="checkbox" id="credit" value="Credit card"
-                                        v-model="filters.paymentMethod">
-                                    <label for="credit">Credit card</label>
-                                    <input type="checkbox" id="cash" value="Cash" v-model="filters.paymentMethod">
-                                    <label for="cash">Cash</label>
-                                </div>
-                            </div>
-                            <hr v-if="filters.type === 'Spending' && filters.paymentMethod.length > 0">
-                            <div class="filter-group"
-                                v-if="(filters.type === 'Spending') && filters.paymentMethod.length > 0">
-                                <label class="label_txt">Category :</label>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="food" value="food" v-model="filters.category">
-                                    <label for="food">Food</label>
-                                    <input type="checkbox" id="hospital" value="hospital" v-model="filters.category">
-                                    <label for="hospital">Hospital</label>
-                                    <input type="checkbox" id="subscribe" value="subscribe" v-model="filters.category">
-                                    <label for="subscribe">Subscribe</label>
-                                </div>
-                            </div>
-                            <div class="filter-group" v-if="filters.type === 'Income'">
-                                <label class="label_txt">Category :</label>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="stock" value="stock" v-model="filters.category">
-                                    <label for="stock">Stock</label>
-                                    <input type="checkbox" id="bonus" value="bonus" v-model="filters.category">
-                                    <label for="bonus">Bonus</label>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="filter-group">
+                        <label class="label_txt">Type :</label>
+                        <div class="radio-group">
+                            <input type="radio" id="spending" value="Spending" v-model="filters.type" checked>
+                            <label for="spending">Spending</label>
+                            <input type="radio" id="income" value="Income" v-model="filters.type">
+                            <label for="income">Income</label>
+                        </div>
+                    </div>
+                    <hr v-if="filters.type">
+                    <div class="filter-group" v-if="filters.type === 'Spending'">
+                        <label class="label_txt">Payment method :</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="debit" value="Debit card" v-model="filters.paymentMethod">
+                            <label for="debit">Debit card</label>
+                            <input type="checkbox" id="credit" value="Credit card" v-model="filters.paymentMethod">
+                            <label for="credit">Credit card</label>
+                            <input type="checkbox" id="cash" value="Cash" v-model="filters.paymentMethod">
+                            <label for="cash">Cash</label>
+                        </div>
+                    </div>
+                    <hr v-if="filters.type === 'Spending' && filters.paymentMethod.length > 0">
+                    <div class="filter-group" v-if="(filters.type === 'Spending') && filters.paymentMethod.length > 0">
+                        <label class="label_txt">Category :</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="food" value="food" v-model="filters.category">
+                            <label for="food">Food</label>
+                            <input type="checkbox" id="hospital" value="hospital" v-model="filters.category">
+                            <label for="hospital">Hospital</label>
+                            <input type="checkbox" id="subscribe" value="subscribe" v-model="filters.category">
+                            <label for="subscribe">Subscribe</label>
+                        </div>
+                    </div>
+                    <div class="filter-group" v-if="filters.type === 'Income'">
+                        <label class="label_txt">Category :</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="stock" value="stock" v-model="filters.category">
+                            <label for="stock">Stock</label>
+                            <input type="checkbox" id="bonus" value="bonus" v-model="filters.category">
+                            <label for="bonus">Bonus</label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="py-4 container-fluid">
-            <div class="mt-4 row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Result</h5>
-                        </div>
-                        <DataTables :data="filteredData" />
-                    </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0" style="color: #380A15; font-size: 20px;">Result</h5>
                 </div>
+                <DataTables :data="filteredData" />
             </div>
         </div>
     </div>
@@ -130,9 +118,10 @@ const filteredData = computed(() => {
 </script>
 
 <style scoped>
-.container {
+.container-fluid {
     padding: 20px;
     font-family: "DM Serif Display", serif;
+    color: #380A15;
     font-weight: bold;
     font-style: normal;
 }
@@ -169,7 +158,6 @@ label {
 
 .label_txt {
     font-weight: bold;
-    color: #380A15;
     font-size: 15pt;
 }
 
@@ -177,7 +165,6 @@ h2 {
     font-family: "DM Serif Display", serif;
     font-weight: bold;
     font-style: normal;
-    color: #380A15;
     font-size: 20pt;
 }
 </style>
