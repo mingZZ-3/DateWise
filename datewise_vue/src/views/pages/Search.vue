@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="py-4 container-fluid">
+        <div class="py-4 container">
             <div class="card">
                 <div class="filter-container">
                     <div class="filter-group period-group">
@@ -72,10 +72,10 @@
                 </div>
             </div>
         </div>
-        <div class="py-4 container-fluid">
+        <div class="py-4 container">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0" style="color: #380A15; font-size: 20px;">Result</h5>
+                    <h5 class="mb-0" style="color: #380A15; font-size: 30px; padding-left: 20px;">Result</h5>
                 </div>
                 <DataTables :data="filteredData" />
             </div>
@@ -94,16 +94,16 @@ const filters = ref({
     startDate: todayString,
     endDate: todayString,
     type: 'Spending',
-    paymentMethod: [],
+    paymentMethod: ['Debit card', 'Credit card'],
     category: []
 })
 
 const data = ref([
-    { type: 'Spending', paymentMethod: 'Debit card', category: 'food', title: 'restaurant', amount: '-20,000', date: '2024-06-01' },
-    { type: 'Spending', paymentMethod: 'Credit card', category: 'food', title: "Jack's yum", amount: '-45,000', date: '2024-06-02' },
-    { type: 'Spending', paymentMethod: 'Debit card', category: 'food', title: 'Kimbap Heaven', amount: '-37,000', date: '2024-06-03' },
-    { type: 'Income', category: 'stock', title: 'Stock Dividends', amount: '+5,000', date: '2024-06-04' },
-    { type: 'Income', category: 'bonus', title: 'Annual Bonus', amount: '+15,000', date: '2024-06-05' }
+    { type: 'Spending', paymentMethod: 'Debit card', category: 'food', title: 'restaurant', amount: '-20,000', date: '2024-06-12' },
+    { type: 'Spending', paymentMethod: 'Credit card', category: 'food', title: "Jack's yum", amount: '-45,000', date: '2024-06-12' },
+    { type: 'Spending', paymentMethod: 'Debit card', category: 'food', title: 'Kimbap Heaven', amount: '-37,000', date: '2024-06-12' },
+    { type: 'Income', category: 'stock', title: 'Stock Dividends', amount: '+5,000', date: '2024-06-12' },
+    { type: 'Income', category: 'bonus', title: 'Annual Bonus', amount: '+15,000', date: '2024-06-12' }
 ])
 
 const filteredData = computed(() => {
@@ -118,7 +118,7 @@ const filteredData = computed(() => {
 </script>
 
 <style scoped>
-.container-fluid {
+.container {
     padding: 20px;
     font-family: "DM Serif Display", serif;
     color: #380A15;
@@ -158,7 +158,8 @@ label {
 
 .label_txt {
     font-weight: bold;
-    font-size: 15pt;
+    font-size: 20pt;
+    padding: 20px;
 }
 
 h2 {
@@ -166,5 +167,9 @@ h2 {
     font-weight: bold;
     font-style: normal;
     font-size: 20pt;
+}
+
+input, label {
+    font-size: 18px;
 }
 </style>
