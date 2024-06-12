@@ -1,12 +1,13 @@
 <template>
-  <div class="py-4 container-fluid">
+  <Temp title="Monthly Analytics" type="4"></Temp>
 
+  <div class="py-4 container-fluid mt-n6">
     <div class="mt-4 row">
       <div class="col-lg-6 col-12">
         <div class="card z-index-2 mt-4">
           <div class="card-header p-3 pt-2">
-             <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">
-            <!-- 초록 <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 me-3 float-start"> -->
+            <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">
+              <!-- 초록 <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 me-3 float-start"> -->
               <i class="material-icons opacity-10">donut_small</i>
             </div>
             <h4 class="mb-0">Pie chart</h4>
@@ -31,8 +32,8 @@
       <div class="col-lg-6 col-12">
         <div class="card z-index-2 mt-4">
           <div class="card-header p-3 pt-2">
-             <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">
-            <!-- 파랑 <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 me-3 float-start"> -->
+            <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">
+              <!-- 파랑 <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 me-3 float-start"> -->
               <i class="large material-icons opacity-10">show_chart</i>
             </div>
             <div class="d-block d-md-flex">
@@ -100,6 +101,7 @@
 import GradientLineChart from "./components/GradientLineChart.vue";
 import BarChartHorizontal from "./components/BarChartHorizontal.vue";
 import PieChart from "./components/PieChart.vue";
+import Temp from "@/components/Header.vue";
 
 export default {
   name: "Charts",
@@ -107,6 +109,15 @@ export default {
     GradientLineChart,
     BarChartHorizontal,
     PieChart,
+    Temp,
   },
 };
 </script>
+
+<style>
+h2 {
+  font-family: "DM Serif Display", serif;
+  font-weight: bold;
+  font-style: normal;
+}
+</style>
