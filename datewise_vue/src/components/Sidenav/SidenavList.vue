@@ -26,7 +26,7 @@
 
       <li class="nav-item" :class="getRoute() === 'dashboards' ? 'active' : ''">
         <!-- 캘린더 -->
-         <!-- <router-link to="Calendar"> -->
+         <router-link to="/pages/calendar">
           <a
             aria-expanded="false"
             class="nav-link"
@@ -39,7 +39,7 @@
             </div>
             <span class="nav-link-text ms-1">Calendar</span>
           </a>
-        <!-- </router-link> -->
+        </router-link>
       </li>
 
       <li class="nav-item" :class="getRoute() === 'dashboards' ? 'active' : ''">
