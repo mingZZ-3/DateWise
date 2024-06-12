@@ -121,7 +121,7 @@
         if (val) {
           documentClasses.add("modal-open");
         } else {
-          documentClasses.remove("modal-open");
+          documentClasses.remove("modal-close");
         }
       },
     },
