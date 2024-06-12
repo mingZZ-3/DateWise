@@ -39,3 +39,12 @@ export default {
   },
 }
 </script>
+
+<style>
+* {
+    font-family: "DM Serif Display", serif;
+    font-weight: bold;
+    font-style: normal;
+    letter-spacing: 1px;
+}
+</style>
