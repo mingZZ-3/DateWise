@@ -1,7 +1,5 @@
 <template>
-  <div class="card">
       <calendar id="calendar-table" />
-  </div>
 
   <div class="card mt-5">
       <div class="card-header">
