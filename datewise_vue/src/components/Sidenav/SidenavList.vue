@@ -43,18 +43,20 @@
       </li>
 
       <li class="nav-item" :class="getRoute() === 'dashboards' ? 'active' : ''">
-        <a
-          aria-expanded="false"
-          class="nav-link"
-          v-bind="$attrs"
-        >
-          <div
-            class="text-center d-flex align-items-center justify-content-center me-2"
+        <router-link to="/pages/recommend">
+          <a
+            aria-expanded="false"
+            class="nav-link"
+            v-bind="$attrs"
           >
-          <i class="material-icons-round opacity-10">diversity_1</i>
-          </div>
-          <span class="nav-link-text ms-1">Date Recommend</span>
-        </a>
+            <div
+              class="text-center d-flex align-items-center justify-content-center me-2"
+            >
+            <i class="material-icons-round opacity-10">diversity_1</i>
+            </div>
+            <span class="nav-link-text ms-1">Date Recommend</span>
+          </a>
+        </router-link>
       </li>
 
       <li class="nav-item" :class="getRoute() === 'dashboards' ? 'active' : ''">
