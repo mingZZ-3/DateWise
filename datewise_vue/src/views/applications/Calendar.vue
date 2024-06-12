@@ -3,38 +3,80 @@
     <base-header class="pb-6 content__title content__title--calendar">
       <div class="row align-items-center py-4">
         <div class="col-lg-6 mt-3 mt-lg-0 text-lg-right">
-          <a href="#" @click.prevent="prev" class="fullcalendar-btn-prev btn btn-sm btn-default">
-            <i class="fas fa-angle-left"></i>
-          </a>
-          <a href="#" @click.prevent="next" class="fullcalendar-btn-next btn btn-sm btn-default">
-            <i class="fas fa-angle-right"></i>
-          </a>
-          <base-button class="btn btn-sm btn-default" @click="changeView('dayGridMonth')">
-            Month
-          </base-button>
-          <base-button class="btn btn-sm btn-default" @click="changeView('dayGridWeek')">
-            Week
-          </base-button>
-          <base-button class="btn btn-sm btn-default" @click="changeView('timeGridDay')">
-            Day
-          </base-button>
+          <!-- <base-button
+            class="btn btn-sm btn-secondary"
+            @click="changeView('dayGridMonth')"
+          >
+            dzdzdzd
+          </base-button> -->
+          <!-- <div style="margin-left: 30px">
+            <base-button
+              class="btn btn-lg btn-secondary"
+              @click="changeView('dayGridWeek')"
+            >
+              Add Spending
+            </base-button>
+            <base-button
+              class="btn btn-lg btn-secondary"
+              @click="changeView('timeGridDay')"
+              style="margin-left: 5px;"
+            >
+              Add Income
+            </base-button>
+          </div> -->
         </div>
       </div>
     </base-header>
 
-    <div class="container mt-5">
+    <div class="container" style="margin-top:-32px">
       <div class="row">
         <div class="col">
           <!-- Fullcalendar -->
           <div class="card card-calendar">
             <!-- Card header -->
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-center align-items-center">
+              <a
+                  href="#"
+                  @click.prevent="prev"
+                  class="fullcalendar-btn-prev btn btn-sm btn-warning"
+                >
+                  <i class="fas fa-angle-left"></i>
+              </a>
+
               <!-- Title -->
-              <h5 class="h3 mb-0">Calendar</h5>
+              <span id="current-month-year" class="h3" style="margin-left: 10px; margin-right: 10px;">
+                {{ currentMonthYear }}
+              </span>
+              
+              <a
+                href="#"
+                @click.prevent="next"
+                class="fullcalendar-btn-next btn btn-sm btn-warning"
+                style="margin-left: 1px;"
+              >
+                <i class="fas fa-angle-right"></i>
+              </a>
+
               <img src="@/assets/search_ic.svg" @click="goToSearch">
             </div>
+            <div class="d-flex justify-content-end" style="margin-right: 20px;">
+              <base-button
+                class="btn btn-lg btn-secondary"
+                @click="changeView('dayGridWeek')"
+              >
+                Add Spending
+              </base-button>
+              <base-button
+                class="btn btn-lg btn-secondary"
+                @click="changeView('timeGridDay')"
+                style="margin-left: 5px;"
+              >
+                Add Income
+              </base-button>
+            </div>
+
             <!-- Card body -->
-            <div class="card-body p-5 card-calendar-body">
+            <div class="card-body card-calendar-body" style="margin-top:-30px">
               <div id="fullCalendar"></div>
             </div>
           </div>
@@ -44,15 +86,30 @@
 
     <modal v-model:show="showAddModal" modal-classes="modal-secondary">
       <form class="new-event--form" @submit.prevent="saveEvent">
-        <base-input name="title" label="Event title" placeholder="Event Title" v-model="model.title"
-          input-classes="form-control-alternative new-event--title">
+        <base-input
+          name="title"
+          label="Event title"
+          placeholder="Event Title"
+          v-model="model.title"
+          input-classes="form-control-alternative new-event--title"
+        >
         </base-input>
         <div class="form-group">
           <label class="form-control-label d-block mb-3">Status color</label>
           <div class="btn-group btn-group-toggle btn-group-colors event-tag">
-            <label v-for="color in eventColors" :key="color" class="btn"
-              :class="[color, { 'active focused': model.className === color }]">
-              <input v-model="model.className" type="radio" name="event-tag" :value="color" autocomplete="off" />
+            <label
+              v-for="color in eventColors"
+              :key="color"
+              class="btn"
+              :class="[color, { 'active focused': model.className === color }]"
+            >
+              <input
+                v-model="model.className"
+                type="radio"
+                name="event-tag"
+                :value="color"
+                autocomplete="off"
+              />
             </label>
           </div>
         </div>
@@ -61,10 +118,18 @@
       </form>
 
       <template v-slot:footer>
-        <button type="submit" class="btn btn-primary new-event--add" @click="saveEvent">
+        <button
+          type="submit"
+          class="btn btn-primary new-event--add"
+          @click="saveEvent"
+        >
           Add event
         </button>
-        <button type="button" class="btn btn-link ml-auto" @click="showAddModal = false">
+        <button
+          type="button"
+          class="btn btn-link ml-auto"
+          @click="showAddModal = false"
+        >
           Close
         </button>
       </template>
@@ -72,23 +137,40 @@
 
     <modal v-model:show="showEditModal" modal-classes="modal-secondary">
       <form class="edit-event--form" @submit.prevent="editEvent">
-        <base-input name="title2" label="Event title" placeholder="Event Title" v-model="model.title"
-          input-classes="form-control-alternative new-event--title">
+        <base-input
+          name="title2"
+          label="Event title"
+          placeholder="Event Title"
+          v-model="model.title"
+          input-classes="form-control-alternative new-event--title"
+        >
         </base-input>
         <div class="form-group">
           <label class="form-control-label d-block mb-3">Status color</label>
           <div class="btn-group btn-group-toggle btn-group-colors event-tag">
-            <label v-for="color in eventColors" :key="color" class="btn"
-              :class="[color, { 'active focused': model.className === color }]">
-              <input v-model="model.className" type="radio" name="event-tag" :value="color" autocomplete="off" />
+            <label
+              v-for="color in eventColors"
+              :key="color"
+              class="btn"
+              :class="[color, { 'active focused': model.className === color }]"
+            >
+              <input
+                v-model="model.className"
+                type="radio"
+                name="event-tag"
+                :value="color"
+                autocomplete="off"
+              />
             </label>
           </div>
         </div>
         <base-input name="textarea" label="Description">
-          <textarea v-model="model.description"
+          <textarea
+            v-model="model.description"
             class="form-control form-control-alternative edit-event--description textarea-autosize"
-            placeholder="Event Desctiption">
-      </textarea>
+            placeholder="Event Desctiption"
+          >
+          </textarea>
           <i class="form-group--bar"></i>
         </base-input>
         <input type="hidden" class="new-event--start" />
@@ -96,9 +178,17 @@
       </form>
 
       <template v-slot:footer>
-        <base-button native-type="submit" type="primary" class="new-event--add" @click="editEvent">Update</base-button>
+        <base-button
+          native-type="submit"
+          type="primary"
+          class="new-event--add"
+          @click="editEvent"
+          >Update</base-button
+        >
         <base-button type="danger" @click="deleteEvent">Delete</base-button>
-        <base-button type="link" class="ml-auto" @click="showAddModal = false">Close</base-button>
+        <base-button type="link" class="ml-auto" @click="showAddModal = false"
+          >Close</base-button
+        >
       </template>
     </modal>
   </div>
@@ -204,6 +294,7 @@ export default {
         "bg-purple",
         "bg-yellow",
       ],
+      currentMonthYear : this.getCurrentMonthYear(),
     };
   },
   methods: {
@@ -275,12 +366,18 @@ export default {
       }
       this.showEditModal = false;
     },
+    getCurrentMonthYear() {
+      const now = new Date();
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const month = months[now.getMonth()]; // 현재 월
+      const year = now.getFullYear(); // 현재 연도
+      return `${month} ${year}`;
+    },
     goToSearch() {
       this.$router.push({
         name: 'Search'
       });
-    }
-
+    },
   },
   mounted() {
     this.initCalendar();
