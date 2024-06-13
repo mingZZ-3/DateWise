@@ -2,8 +2,8 @@
     <div class="container-fluid pb-5">
         <div class="card card-body">
             <h4>{{ title }}</h4>
-            <div id="moneyFormat" v-show="isSpending"><h3 class="spending">{{ setAmount }}</h3></div>
-            <div id="moneyFormat" v-show="!isSpending"><h3 class="income">{{ setAmount }}</h3></div>
+            <div id="moneyFormat" v-show="isSpending"><h1 class="spending">{{ setAmount }}</h1></div>
+            <div id="moneyFormat" v-show="!isSpending"><h1 class="income">{{ setAmount }}</h1></div>
         </div> 
     </div>
     
@@ -69,10 +69,10 @@ export default {
 h4 {
   font-family: "DM Serif Text", serif;
   font-weight: 400;
-  font-style: normal;
+  font-style: bold;
 }
 
-h3 {
+h1 {
   font-family: "DM Serif Text", serif;
   font-weight: 400;
   font-style: italic;

@@ -1,6 +1,6 @@
 <template>
   <div class="mb-4">
-    <MainHeader/>
+  <MainHeader/>
 
   <div class="row mt-n4" style="margin-left: 35px; margin-right: 35px;">
     <MoneyBox class="col" title="Spending" type="0"/>
@@ -24,7 +24,7 @@
           </div>
           <div class="p-3 card-body">
             <section class="pb-0">
-              <div class="container">
+              <div class="container mb-3">
               <div class="row">
                   <div class="col-lg-4 col-md-6" 
                     v-for="item in recommendList" :key="item.id">
@@ -100,15 +100,29 @@ import SimpleBookingCard from "@/views/pages/components/SimpleBookingCard.vue";
 import { storeToRefs } from 'pinia';
 import { useKakaoStore } from '@/store/kakaoStore.js'
 import { onMounted } from 'vue';
-
+import { deleteSingleData } from '@/views/applications/DataApi.js'
 
 const KakaoStore = useKakaoStore();
 const { recommendList } = storeToRefs(KakaoStore);
 
+const deleteData = async (id) => {
+    try {
+      const tmp = await deleteSingleData(id);
+      console.log(tmp);
+    } catch (error) {
+      console.error('Failed to update data:', error);
+    }
+}
+
 onMounted(() => {
   KakaoStore.setSize(3);
   KakaoStore.recommend();
+  // KakaoStore.setKeyword("마라");
+  // KakaoStore.search()
+  deleteData("8304");
 });
+
+
 </script>
 
 <style>
@@ -118,6 +132,6 @@ h4, i, p {
     font-family: "DM Serif Text", serif;
     font-weight: bold;
     font-style: normal;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 </style>
