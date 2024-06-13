@@ -43,7 +43,7 @@
     </div>
 
     <modal v-model:show="showAddSpendingModal" modal-classes="modal-secondary">
-      <form class="new-event--form" @submit.prevent="saveEvent">
+      <form class="new-event--form" @submit.prevent="saveSpendingEvent">
         <div class="form-group">
           <div class="form-group">
             <label for="date" class="form-label">Date</label>
@@ -92,8 +92,8 @@
       </form>
 
       <template v-slot:footer>
-        <button type="submit" class="btn btn-primary btn-link new-event--add" @click="saveEvent">
-          Add event
+        <button type="submit" class="btn btn-primary btn-link new-event--add" @click="saveSpendingEvent">
+          Add Spending
         </button>
 
         <button type="button" class="btn btn-primary btn-link ml-auto" @click="closeModal">
@@ -103,7 +103,7 @@
     </modal>
     
     <modal v-model:show="showAddIncomeModal" modal-classes="modal-secondary">
-      <form class="new-event--form" @submit.prevent="saveEvent">
+      <form class="new-event--form" @submit.prevent="saveSpendingEvent">
         <div class="form-group">
           <div class="form-group">
             <label for="date" class="form-label">Date</label>
@@ -138,8 +138,8 @@
       </form>
 
       <template v-slot:footer>
-        <button type="submit" class="btn btn-primary btn-link new-event--add" @click="saveEvent">
-          Add event
+        <button type="submit" class="btn btn-primary btn-link new-event--add" @click="saveIncomeEvent">
+          Add Income
         </button>
 
         <button type="button" class="btn btn-primary btn-link ml-auto" @click="closeModal">
@@ -211,18 +211,18 @@ let addSpendingData = ref({
   memo: ""
 });
 
-let addIncomeData = {
+let addIncomeData = ref({
   category: "",
   date: "",
   title: "",
   amount: 0,
   memo: ""
-};
+});
 
 let model = {
   allDay: true,
   id: "",
-  title: "title",
+  title: "",
   start: "",
   backgroundColor: ""
 };
@@ -254,11 +254,11 @@ const closeModal = () =>{
   addSpendingData.value.amount = 0;
   addSpendingData.value.memo = "";
 
-  addIncomeData.category = "";
-  addIncomeData.date = "";
-  addIncomeData.title = "";
-  addIncomeData.amount = 0;
-  addIncomeData.memo = "";
+  addIncomeData.value.category = "";
+  addIncomeData.value.date = "";
+  addIncomeData.value.title = "";
+  addIncomeData.value.amount = 0;
+  addIncomeData.value.memo = "";
 };
 
 const initCalendar = () => {
@@ -290,7 +290,7 @@ const initCalendar = () => {
       {
         id: "I2024-06-13",
         title: "+1600",
-        start: new Date(y, m, d, 12, 0),
+        start: new Date(y, m, d),
         allDay: true,
       }
     ]
@@ -325,16 +325,48 @@ const prev = () => {
 //   backgroundColor: ""
 // };
 
-const saveEvent = () => {
-  // const findId = "S" + addSpendingData.date;
+const saveSpendingEvent = () => {
+  const findId = "S" + addSpendingData.value.date;
+  const event = calendar.getEventById(findId);
 
-  // model.id = "S" + addSpendingData.date;
-  // model.title = addSpendingData.amount;
-  // model.start = addSpendingData.date;
-  // model.backgroundColor = "red";
+  if (event) {    // id에 해당하는 이벤트가 있는 경우 -> 그 이벤트의 title(총 지출)에 입력한 지출을 더함
+    let existAmount = event.title;
+    let addAmount = addSpendingData.value.amount;
+    let finalAmount = Number(existAmount) - addAmount;
 
-  calendar.addEvent(addSpendingData);
+    event.setProp('title', String(finalAmount));
+  } else {    // id에 해당하는 이벤트가 없는 경우 -> 새롭게 넣어줌
+    model.id = findId;
+    model.title = -addSpendingData.value.amount;
+    model.start = addSpendingData.value.date;
+    model.backgroundColor = "red";
+
+    calendar.addEvent(model);
+  }
+
   showAddSpendingModal.value = false;
+};
+
+const saveIncomeEvent = () => {
+  const findId = "I" + addIncomeData.value.date;
+  const event = calendar.getEventById(findId);
+
+  if (event) {    // id에 해당하는 이벤트가 있는 경우 -> 그 이벤트의 title(총 지출)에 입력한 지출을 더함
+    let existAmount = event.title;
+    let addAmount = addIncomeData.value.amount;
+    let finalAmount = Number(existAmount) + addAmount;
+
+    event.setProp('title', "+" + String(finalAmount));
+  } else {    // id에 해당하는 이벤트가 없는 경우 -> 새롭게 넣어줌
+    model.id = findId;
+    model.title = "+" + String(addIncomeData.value.amount);
+    model.start = addIncomeData.value.date;
+    model.backgroundColor = "";
+
+    calendar.addEvent(model);
+  }
+
+  showAddIncomeModal.value = false;
 };
 
 // const addEvent = async (event) => {
