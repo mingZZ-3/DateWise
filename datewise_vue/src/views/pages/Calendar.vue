@@ -1,12 +1,14 @@
 <template>
-      <calendar id="calendar-table" />
+  <calendar id="calendar-table" />
 
-  <div class="card mt-5">
-      <div class="card-header">
-          <h5 class="mb-0" style="color: #380A15; font-size: 20px;">Result</h5>
-      </div>
-      <DataTables :data="filteredData" />
-  </div>
+  <div class="py-4 container">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0" style="color: #380A15; font-size: 30px; padding-left: 20px;">Result</h5>
+        </div>
+        <DataTables :data="filteredData" />
+    </div>
+</div>
 </template>
 
 <script>

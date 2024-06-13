@@ -1,15 +1,29 @@
 <template>
-  <div>
-    <base-header class="pb-6 content__title content__title--calendar">
-      <div class="row align-items-center py-4">
-        <div class="col-lg-6 mt-3 mt-lg-0 text-lg-right">
-          <!-- <base-button
-            class="btn btn-sm btn-secondary"
-            @click="changeView('dayGridMonth')"
-          >
-            dzdzdzd
-          </base-button> -->
-          <!-- <div style="margin-left: 30px">
+  <Header title="Calendar" type="2"/>
+  <div class="py-4 container">
+    <div class="row">
+      <div class="col">
+        <!-- Fullcalendar -->
+        <div class="card card-calendar">
+          <!-- Card header -->
+          <div class="card-header d-flex justify-content-center align-items-center">
+            <a href="#" @click.prevent="prev" class="fullcalendar-btn-prev btn btn-sm btn-warning">
+              <i class="fas fa-angle-left"></i>
+            </a>
+          
+            <!-- Title -->
+            <span id="current-month-year" class="h2" style="margin-left: 10px; margin-right: 10px;">
+              {{ currentMonthYear }}
+            </span>
+            
+            <a href="#" @click.prevent="next" class="fullcalendar-btn-next btn btn-sm btn-warning" style="margin-left: 1px;">
+              <i class="fas fa-angle-right"></i>
+            </a>
+          
+            <img src="@/assets/search_ic.svg" @click="goToSearch" style="margin-left: auto;">
+          </div>
+          
+          <div class="d-flex justify-content-end" style="margin-right: 20px;">
             <base-button
               class="btn btn-lg btn-secondary"
               @click="changeView('dayGridWeek')"
@@ -23,63 +37,13 @@
             >
               Add Income
             </base-button>
-          </div> -->
-        </div>
-      </div>
-    </base-header>
-
-    <div class="container" style="margin-top:-32px">
-      <div class="row">
-        <div class="col">
-          <!-- Fullcalendar -->
-          <div class="card card-calendar">
-            <!-- Card header -->
-            <div class="card-header d-flex justify-content-center align-items-center">
-              <a
-                  href="#"
-                  @click.prevent="prev"
-                  class="fullcalendar-btn-prev btn btn-sm btn-warning"
-                >
-                  <i class="fas fa-angle-left"></i>
-              </a>
-
-              <!-- Title -->
-              <span id="current-month-year" class="h3" style="margin-left: 10px; margin-right: 10px;">
-                {{ currentMonthYear }}
-              </span>
-              
-              <a
-                href="#"
-                @click.prevent="next"
-                class="fullcalendar-btn-next btn btn-sm btn-warning"
-                style="margin-left: 1px;"
-              >
-                <i class="fas fa-angle-right"></i>
-              </a>
-
-              <img src="@/assets/search_ic.svg" @click="goToSearch">
-            </div>
-            <div class="d-flex justify-content-end" style="margin-right: 20px;">
-              <base-button
-                class="btn btn-lg btn-secondary"
-                @click="changeView('dayGridWeek')"
-              >
-                Add Spending
-              </base-button>
-              <base-button
-                class="btn btn-lg btn-secondary"
-                @click="changeView('timeGridDay')"
-                style="margin-left: 5px;"
-              >
-                Add Income
-              </base-button>
-            </div>
-
-            <!-- Card body -->
-            <div class="card-body card-calendar-body" style="margin-top:-30px">
-              <div id="fullCalendar"></div>
-            </div>
           </div>
+
+          <!-- Card body -->
+          <div class="card-body card-calendar-body" style="margin-top:-30px">
+            <div id="fullCalendar"></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -191,203 +155,201 @@
         >
       </template>
     </modal>
+
   </div>
 </template>
-<script>
-import Modal from "./Modal";
 
+<script setup>
 import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridDay from "@fullcalendar/timegrid";
 
+import { ref, reactive, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+import Modal from "./Modal";
+import Header from "@/components/Header.vue"
+
+const router = useRouter();
+
 const today = new Date();
 const y = today.getFullYear();
 const m = today.getMonth();
 const d = today.getDate();
-var calendar;
-export default {
-  name: "calendar",
-  components: {
-    Modal,
-  },
-  data() {
-    return {
-      events: [
-        {
-          title: "All Day Event",
-          start: new Date(y, m, 1),
-          className: "event-default",
-        },
-        {
-          id: 999,
-          title: "Repeating Event",
-          start: new Date(y, m, d - 4, 6, 0),
-          allDay: false,
-          className: "event-green",
-        },
-        {
-          id: 999,
-          title: "Repeating Event",
-          start: new Date(y, m, d + 3, 6, 0),
-          allDay: false,
-          className: "event-orange",
-        },
-        {
-          title: "Meeting",
-          start: new Date(y, m, d - 1, 10, 30),
-          allDay: false,
-          className: "event-green",
-        },
-        {
-          title: "Lunch",
-          start: new Date(y, m, d + 7, 12, 0),
-          end: new Date(y, m, d + 7, 14, 0),
-          allDay: false,
-          className: "event-red",
-        },
-        {
-          title: "Md-pro Launch",
-          start: new Date(y, m, d - 2, 12, 0),
-          allDay: true,
-          className: "event-azure",
-        },
-        {
-          title: "Birthday Party",
-          start: new Date(y, m, d + 1, 19, 0),
-          end: new Date(y, m, d + 1, 22, 30),
-          allDay: false,
-          className: "event-azure",
-        },
-        {
-          title: "Click for Creative Tim",
-          start: new Date(y, m, 21),
-          end: new Date(y, m, 22),
-          url: "http://www.creative-tim.com/",
-          className: "event-orange",
-        },
-        {
-          title: "Click for Google",
-          start: new Date(y, m, 21),
-          end: new Date(y, m, 22),
-          url: "http://www.creative-tim.com/",
-          className: "event-orange",
-        },
-      ],
-      model: {
-        title: "New event",
-        className: "bg-default",
-        description:
-          "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-        start: "",
-        end: "",
-      },
-      showAddModal: false,
-      showEditModal: false,
-      eventColors: [
-        "bg-info",
-        "bg-orange",
-        "bg-red",
-        "bg-green",
-        "bg-default",
-        "bg-blue",
-        "bg-purple",
-        "bg-yellow",
-      ],
-      currentMonthYear : this.getCurrentMonthYear(),
-    };
-  },
-  methods: {
-    initCalendar() {
-      var calendarEl = document.getElementById("fullCalendar");
 
-      calendar = new Calendar(calendarEl, {
-        plugins: [dayGridPlugin, timeGridDay, interactionPlugin],
-        selectable: true,
-        headerToolbar: false,
-        select: () => {
-          this.showAddModal = true;
-          this.model.start = new Date(y, m, 21);
-          this.model.end = new Date(y, m, 21);
-        },
-        eventClick: () => {
-          this.model = {
-            title: event.title,
-            className: event.classNames ? event.classNames.join(" ") : "",
-            start: event.start,
-            end: event.end,
-            description:
-              "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-          };
-          this.showEditModal = true;
-        },
-        events: this.events,
-      });
-      calendar.render();
-    },
-    changeView(newView) {
-      calendar.changeView(newView);
-      calendar.view.title;
-    },
-    next() {
-      calendar.next();
-    },
-    prev() {
-      calendar.prev();
-    },
-    saveEvent() {
-      if (this.model.title) {
-        let event = {
-          ...this.model,
-          allDay: true,
-        };
-        this.events.push(JSON.parse(JSON.stringify(event)));
-        console.log(this.events);
-        this.model = {
-          title: "",
-          eventColor: "bg-danger",
-          start: "",
-          end: "",
-        };
-      }
-      this.showAddModal = false;
-    },
-    editEvent() {
-      let index = this.events.findIndex((e) => e.title === this.model.title);
-      if (index !== -1) {
-        this.events.splice(index, 1, this.model);
-      }
-      this.showEditModal = false;
-    },
-    deleteEvent() {
-      let index = this.events.findIndex((e) => e.title === this.model.title);
-      if (index !== -1) {
-        this.events.splice(index, 1);
-      }
-      this.showEditModal = false;
-    },
-    getCurrentMonthYear() {
-      const now = new Date();
-      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      const month = months[now.getMonth()]; // 현재 월
-      const year = now.getFullYear(); // 현재 연도
-      return `${month} ${year}`;
-    },
-    goToSearch() {
-      this.$router.push({
-        name: 'Search'
-      });
-    },
+const events = reactive([
+  {
+    title: "All Day Event",
+    start: new Date(y, m, 1),
+    className: "event-default",
   },
-  mounted() {
-    this.initCalendar();
+  {
+    id: 999,
+    title: "Repeating Event",
+    start: new Date(y, m, d - 4, 6, 0),
+    allDay: false,
+    className: "event-green",
   },
+  {
+    id: 999,
+    title: "Repeating Event",
+    start: new Date(y, m, d + 3, 6, 0),
+    allDay: false,
+    className: "event-orange",
+  },
+  {
+    title: "Meeting",
+    start: new Date(y, m, d - 1, 10, 30),
+    allDay: false,
+    className: "event-green",
+  },
+  {
+    title: "Lunch",
+    start: new Date(y, m, d + 7, 12, 0),
+    end: new Date(y, m, d + 7, 14, 0),
+    allDay: false,
+    className: "event-red",
+  },
+  {
+    title: "Md-pro Launch",
+    start: new Date(y, m, d - 2, 12, 0),
+    allDay: true,
+    className: "event-azure",
+  },
+  {
+    title: "Birthday Party",
+    start: new Date(y, m, d + 1, 19, 0),
+    end: new Date(y, m, d + 1, 22, 30),
+    allDay: false,
+    className: "event-azure",
+  },
+  {
+    title: "Click for Creative Tim",
+    start: new Date(y, m, 21),
+    end: new Date(y, m, 22),
+    url: "http://www.creative-tim.com/",
+    className: "event-orange",
+  },
+  {
+    title: "Click for Google",
+    start: new Date(y, m, 21),
+    end: new Date(y, m, 22),
+    url: "http://www.creative-tim.com/",
+    className: "event-orange",
+  },
+]);
+
+const model = reactive({
+  title: "New event",
+  className: "bg-default",
+  description: "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+  start: "",
+  end: "",
+});
+
+const showAddModal = ref(false);
+const showEditModal = ref(false);
+
+const eventColors = [
+  "bg-info",
+  "bg-orange",
+  "bg-red",
+  "bg-green",
+  "bg-default",
+  "bg-blue",
+  "bg-purple",
+  "bg-yellow",
+];
+
+const currentMonthYear = computed(() => {
+  const now = new Date();
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const month = months[now.getMonth()];
+  const year = now.getFullYear();
+  return `${month} ${year}`;
+});
+
+let calendar;
+
+const initCalendar = () => {
+  const calendarEl = document.getElementById("fullCalendar");
+  calendar = new Calendar(calendarEl, {
+    plugins: [dayGridPlugin, timeGridDay, interactionPlugin],
+    selectable: true,
+    headerToolbar: false,
+    select: () => {
+      showAddModal.value = true;
+      model.start = new Date().toISOString().split('T')[0];
+      model.end = new Date().toISOString().split('T')[0];
+    },
+    eventClick: (event) => {
+      model.title = event.title;
+      model.className = event.classNames ? event.classNames.join(" ") : "";
+      model.start = event.start;
+      model.end = event.end;
+      showEditModal.value = true;
+    },
+    events: events,
+  });
+  calendar.render();
 };
+
+const changeView = (newView) => {
+  calendar.changeView(newView);
+  calendar.view.title;
+};
+
+const next = () => {
+  calendar.next();
+};
+
+const prev = () => {
+  calendar.prev();
+};
+
+const saveEvent = () => {
+  if (model.title) {
+    let event = {
+      ...model,
+      allDay: true,
+    };
+    events.push(JSON.parse(JSON.stringify(event)));
+    console.log(events);
+    model.title = "";
+    model.eventColor = "bg-danger";
+    model.start = "";
+    model.end = "";
+  }
+  showAddModal.value = false;
+};
+
+const editEvent = () => {
+  let index = events.findIndex((e) => e.title === model.title);
+  if (index !== -1) {
+    events.splice(index, 1, model);
+  }
+  showEditModal.value = false;
+};
+
+const deleteEvent = () => {
+  let index = events.findIndex((e) => e.title === model.title);
+  if (index !== -1) {
+    events.splice(index, 1);
+  }
+  showEditModal.value = false;
+};
+
+const goToSearch = () =>{
+  router.push({name: 'Search'})
+};
+
+onMounted(() => {
+  initCalendar();
+});
+
 </script>
 
-<!-- <style lang="scss">
-@import "~@/assets/sass/core/vendors/fullcalendar";
-</style> -->
 <style scoped>
 img {
   box-decoration-break: none;
