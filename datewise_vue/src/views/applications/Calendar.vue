@@ -43,71 +43,66 @@
     </div>
 
     <modal v-model:show="showAddSpendingModal" modal-classes="modal-secondary">
-      <form class="new-event--form" @submit.prevent="saveSpendingEvent">
-        <div class="form-group">
-          <div class="form-group">
-            <label for="date" class="form-label">Date</label>
-            <input type="date" id="date" class="form-control" v-model="addSpendingData.date">
-          </div>
+      <div class="form-group">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" id="date" class="form-control" v-model="addSpendingData.date">
+      </div>
 
-          <div class="form-group">
-            <label for="category" class="form-label">Category</label>
-            <select id="category" class="form-control" v-model="addSpendingData.category">
-              <option disabled value="">Choose category</option>
-              <option>food expenses</option>
-              <option>vehicle maintenance cost</option>
-              <option>traffic</option>
-              <option>shopping</option>
-              <option>medical care</option>
-              <option>utility bills</option>
-              <option>insurance</option>
-              <option>beauty</option>
-              <option>saving</option>
-              <option>education</option>
-              <option>donation</option>
-              <option>pet</option>
-              <option>congratulations and condolences</option>
-              <option>subscription</option>
-            </select>
-          </div>
+      <div class="form-group">
+        <label for="category" class="form-label">Category</label>
+        <select id="category" class="form-control" v-model="addSpendingData.category">
+          <option disabled value="">Choose category</option>
+          <option>food expenses</option>
+          <option>vehicle maintenance cost</option>
+          <option>traffic</option>
+          <option>shopping</option>
+          <option>medical care</option>
+          <option>utility bills</option>
+          <option>insurance</option>
+          <option>beauty</option>
+          <option>saving</option>
+          <option>education</option>
+          <option>donation</option>
+          <option>pet</option>
+          <option>congratulations and condolences</option>
+          <option>subscription</option>
+        </select>
+      </div>
 
-          <div class="form-group">
-            <label for="method" class="form-label">Payment Method</label>
-            <select id="method" class="form-control" v-model="addSpendingData.paymentMethod">
-              <option disabled value="">Choose payment method</option>
-              <option>dedit card</option>
-              <option>credit card</option>
-              <option>cash</option>
-            </select>
-          </div>
+      <div class="form-group">
+        <label for="method" class="form-label">Payment Method</label>
+        <select id="method" class="form-control" v-model="addSpendingData.paymentMethod">
+          <option disabled value="">Choose payment method</option>
+          <option>dedit card</option>
+          <option>credit card</option>
+          <option>cash</option>
+        </select>
+      </div>
 
-          <div class="form-group">
-            <label for="place" class="form-label">Place</label>
-            <input type="text" id="place" class="form-control" v-model="addSpendingData.place">
-          </div>
+      <div class="form-group">
+        <label for="place" class="form-label">Place</label>
+        <input type="text" id="place" class="form-control" v-model="addSpendingData.place">
+      </div>
 
-          <div class="form-group">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" id="title" class="form-control" v-model="addSpendingData.title">
-          </div>
+      <div class="form-group">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" id="title" class="form-control" v-model="addSpendingData.title">
+      </div>
 
-          <div class="form-group">
-            <label for="amount" class="form-label">Amount</label>
-            <input type="number" id="amount" class="form-control" v-model="addSpendingData.amount">
-          </div>
-          
-          <div class="form-group">
-            <label for="memo" class="form-label">Memo</label>
-            <textarea id="memo" class="form-control" v-model="addSpendingData.memo"></textarea>
-          </div>
-        </div>
-      </form>
+      <div class="form-group">
+        <label for="amount" class="form-label">Amount</label>
+        <input type="number" id="amount" class="form-control" v-model="addSpendingData.amount">
+      </div>
+      
+      <div class="form-group">
+        <label for="memo" class="form-label">Memo</label>
+        <textarea id="memo" class="form-control" v-model="addSpendingData.memo"></textarea>
+      </div>
 
       <template v-slot:footer>
         <button type="submit" class="btn btn-primary btn-link new-event--add" @click="saveSpendingEvent">
           Add Spending
         </button>
-
         <button type="button" class="btn btn-primary btn-link ml-auto" @click="closeModal">
           Close
         </button>
@@ -115,56 +110,50 @@
     </modal>
     
     <modal v-model:show="showAddIncomeModal" modal-classes="modal-secondary">
-      <form class="new-event--form" @submit.prevent="saveSpendingEvent">
-        <div class="form-group">
-          <div class="form-group">
-            <label for="date" class="form-label">Date</label>
-            <input type="date" id="date" class="form-control" v-model="addIncomeData.date">
-          </div>
+      <div class="form-group">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" id="date" class="form-control" v-model="addIncomeData.date">
+      </div>
 
-          <div class="form-group">
-            <label for="category" class="form-label">Category</label>
-            <select id="category" class="form-control" v-model="addIncomeData.category">
-              <option disabled value="">Choose category</option>
-              <option>salary</option>
-              <option>a bonus</option>
-              <option>business income</option>
-              <option>part-time job</option>
-              <option>pocket money</option>
-              <option>Financial income</option>
-              <option>insurance money</option>
-              <option>scholarship</option>
-              <option>secondhand transaction</option>
-              <option>SNS</option>
-              <option>apptech</option>
-              <option>going dutch</option>
-              <option>other income</option>
-              
-            </select>
-          </div>
+      <div class="form-group">
+        <label for="category" class="form-label">Category</label>
+        <select id="category" class="form-control" v-model="addIncomeData.category">
+          <option disabled value="">Choose category</option>
+          <option>salary</option>
+          <option>a bonus</option>
+          <option>business income</option>
+          <option>part-time job</option>
+          <option>pocket money</option>
+          <option>Financial income</option>
+          <option>insurance money</option>
+          <option>scholarship</option>
+          <option>secondhand transaction</option>
+          <option>SNS</option>
+          <option>apptech</option>
+          <option>going dutch</option>
+          <option>other income</option>
+        </select>
+      </div>
 
-          <div class="form-group">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" id="title" class="form-control" v-model="addIncomeData.title">
-          </div>
+      <div class="form-group">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" id="title" class="form-control" v-model="addIncomeData.title">
+      </div>
 
-          <div class="form-group">
-            <label for="amount" class="form-label">Amount</label>
-            <input type="number" id="amount" class="form-control" v-model="addIncomeData.amount">
-          </div>
-          
-          <div class="form-group">
-            <label for="memo" class="form-label">Memo</label>
-            <textarea id="memo" class="form-control" v-model="addIncomeData.memo"></textarea>
-          </div>
-        </div>
-      </form>
+      <div class="form-group">
+        <label for="amount" class="form-label">Amount</label>
+        <input type="number" id="amount" class="form-control" v-model="addIncomeData.amount">
+      </div>
+      
+      <div class="form-group">
+        <label for="memo" class="form-label">Memo</label>
+        <textarea id="memo" class="form-control" v-model="addIncomeData.memo"></textarea>
+      </div>
 
       <template v-slot:footer>
         <button type="submit" class="btn btn-primary btn-link new-event--add" @click="saveIncomeEvent">
           Add Income
         </button>
-
         <button type="button" class="btn btn-primary btn-link ml-auto" @click="closeModal">
           Close
         </button>
@@ -196,7 +185,6 @@
         >
         <base-button type="danger" @click="deleteEvent">Delete</base-button>
         <button type="button" class="btn btn-link ml-auto" @click="closeModal">Close</button>
-
       </template>
     </modal>
 
@@ -208,19 +196,17 @@ import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 import Modal from "./Modal";
 import Header from "@/components/Header.vue"
 
+let calendar;
 const router = useRouter();
 
-const today = new Date();
-const y = today.getFullYear();
-const m = today.getMonth();
-const d = today.getDate();
+let currentMonthYear = ref("");
 
 let addSpendingData = ref({
   paymentMethod: "",
@@ -252,20 +238,18 @@ const showAddSpendingModal = ref(false);
 const showAddIncomeModal = ref(false);
 const showEditModal = ref(false);
 
-const currentMonthYear = computed(() => {
-  const now = new Date();
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const month = months[now.getMonth()];
-  const year = now.getFullYear();
-  return `${month} ${year}`;
-});
-
-let calendar;
-
 const closeModal = () =>{
   showAddSpendingModal.value = false;
   showAddIncomeModal.value = false;
   showEditModal.value = false;
+};
+
+const getCurrentDate = () => {
+  const today = new Date();
+  const y = today.getFullYear();
+  const m = String(today.getMonth() + 1).padStart(2, '0');
+  const d = String(today.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 };
 
 const openAddSpendingModal = () => {
@@ -290,14 +274,6 @@ const openAddIncomeModal = () => {
   addIncomeData.value.memo = "";
 
   showAddIncomeModal.value = true;
-};
-
-const getCurrentDate = () => {
-  const today = new Date();
-  const y = today.getFullYear();
-  const m = String(today.getMonth() + 1).padStart(2, '0');
-  const d = String(today.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
 };
 
 const initEvents = async ()=>{
@@ -349,24 +325,35 @@ const initCalendar = () => {
   calendar.render();
 };
 
-const next = () => {
-  calendar.next();
+const getCurrentMonthYear = () => {
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
+  const now = calendar.getDate();
+  const month = months[now.getMonth()];
+  const year = now.getFullYear();
+  currentMonthYear.value = `${month} ${year}`;
 };
 
 const prev = () => {
   calendar.prev();
+  getCurrentMonthYear();
+};
+
+const next = () => {
+  calendar.next();
+  getCurrentMonthYear();
 };
 
 const saveSpendingEvent = () => {
   const findId = "S" + addSpendingData.value.date;
-  const event = calendar.getEventById(findId);
+  let event = calendar.getEventById(findId);
 
   if (event) {    // id에 해당하는 이벤트가 있는 경우 -> 그 이벤트의 title(총 지출)에 입력한 지출을 더함
-    let existAmount = event.title;
-    let addAmount = addSpendingData.value.amount;
-    let finalAmount = Number(existAmount) - addAmount;
+    const existAmount = event.title;
+    const addAmount = addSpendingData.value.amount;
+    const finalAmount = Number(existAmount) - addAmount;
 
-    event.setProp('title', String(finalAmount));
+    event.setProp('title', finalAmount);
   } else {    // id에 해당하는 이벤트가 없는 경우 -> 새롭게 넣어줌
     model.id = findId;
     model.title = -addSpendingData.value.amount;
@@ -381,14 +368,14 @@ const saveSpendingEvent = () => {
 
 const saveIncomeEvent = () => {
   const findId = "I" + addIncomeData.value.date;
-  const event = calendar.getEventById(findId);
+  let event = calendar.getEventById(findId);
 
   if (event) {    // id에 해당하는 이벤트가 있는 경우 -> 그 이벤트의 title(총 지출)에 입력한 지출을 더함
-    let existAmount = event.title;
-    let addAmount = addIncomeData.value.amount;
-    let finalAmount = Number(existAmount) + addAmount;
+    const existAmount = event.title;
+    const addAmount = addIncomeData.value.amount;
+    const finalAmount = Number(existAmount) + addAmount;
 
-    event.setProp('title', "+" + String(finalAmount));
+    event.setProp('title', "+" + finalAmount);
   } else {    // id에 해당하는 이벤트가 없는 경우 -> 새롭게 넣어줌
     model.id = findId;
     model.title = "+" + String(addIncomeData.value.amount);
@@ -401,20 +388,35 @@ const saveIncomeEvent = () => {
   showAddIncomeModal.value = false;
 };
 
-const updateEvent = (eventId, newTitle, newStartDate) =>{
-  const event = calendar.getEventById(eventId);
+const updateEvent = (eventId, prevAmount, newAmount, newDate) =>{
+  let event = calendar.getEventById(eventId);
 
   if (event) {
-    event.setProp('title', newTitle);     // 타이틀 수정
-    event.setDates(newStartDate);         // 시작일과 종료일 수정
+    const existAmount = event.title;
+    const gapAmount = newAmount - prevAmount;
+
+    let finalAmount;
+    if(eventId[0] == "S"){
+      finalAmount = Number(existAmount) - gapAmount;
+      event.setProp('title', finalAmount);
+    }
+    else if(eventId[0] == "I"){
+      finalAmount = Number(existAmount) + gapAmount;
+      event.setProp('title', "+" + finalAmount);
+    }
+    
+    event.setStart(newDate);
     event.setAllDay(true);
+
+
   } else {
     console.error(`Event with id ${eventId} not found`);
+    alert("error");
   }
 }
 
 const editEvent = () => {
-  updateEvent("S2024-06-13T03:00:00.000Z", 'title', new Date(y, m, d + 1, 12, 0));
+  updateEvent("I2024-06-13", 1000, 2000, "2024-06-14");
 
   showEditModal.value = false;
 };
@@ -433,6 +435,7 @@ const goToSearch = () =>{
 
 onMounted(() => {
   initCalendar();
+  getCurrentMonthYear();
 });
 </script>
 
