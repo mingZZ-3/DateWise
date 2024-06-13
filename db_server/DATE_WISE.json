@@ -1,0 +1,72 @@
+{
+  "data": [
+    {
+      "date": "2024-06-12",
+      "spending": [
+        {
+          "method": "card",
+          "category": "food",
+          "title": "굴림만두 지출",
+          "amount": 10000,
+          "memo": "만두 맛있음"
+        },
+        {
+          "method": "cash",
+          "category": "food",
+          "title": "시홍쓰 지출",
+          "amount": 9000,
+          "memo": "불맛 맛있음"
+        }
+      ],
+      "income": [
+        {
+          "category": "salary",
+          "title": "월급",
+          "amount": 5000000,
+          "memo": "행복한 월급날"
+        },
+        {
+          "category": "interest",
+          "title": "은행 이자",
+          "amount": 1000,
+          "memo": "티끌 모아 태산"
+        }
+      ]
+    },
+
+    {
+      "date": "2024-06-13",
+      "spending": [
+        {
+          "method": "card",
+          "category": "food",
+          "title": "굴림만두 지출",
+          "amount": 10000,
+          "memo": "만두 맛있음"
+        },
+        {
+          "method": "cash",
+          "category": "food",
+          "title": "시홍쓰 지출",
+          "amount": 9000,
+          "memo": "불맛 맛있음"
+        }
+      ],
+      "income": [
+        {
+          "category": "salary",
+          "title": "월급",
+          "amount": 5000000,
+          "memo": "행복한 월급날"
+        },
+        {
+          "category": "interest",
+          "title": "은행 이자",
+          "amount": 1000,
+          "memo": "티끌 모아 태산"
+        }
+      ]
+
+    }
+  ]
+}
