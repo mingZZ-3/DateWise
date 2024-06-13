@@ -24,11 +24,11 @@
           </div>
           
           <div class="d-flex justify-content-end" style="margin-right: 20px;">
-            <button class="btn btn-lg btn-secondary" @click="showAddSpendingModal = true">
+            <button class="btn btn-lg btn-secondary" @click="openAddSpendingModal">
               Add Spending
             </button>
 
-            <button class="btn btn-lg btn-secondary" @click="showAddIncomeModal = true" style="margin-left: 5px;">
+            <button class="btn btn-lg btn-secondary" @click="openAddIncomeModal" style="margin-left: 5px;">
               Add Income
             </button>
           </div>
@@ -54,9 +54,20 @@
             <label for="category" class="form-label">Category</label>
             <select id="category" class="form-control" v-model="addSpendingData.category">
               <option disabled value="">Choose category</option>
-              <option>salary</option>
-              <option>part-time job</option>
-              <option>scholarship</option>
+              <option>food expenses</option>
+              <option>vehicle maintenance cost</option>
+              <option>traffic</option>
+              <option>shopping</option>
+              <option>medical care</option>
+              <option>utility bills</option>
+              <option>insurance</option>
+              <option>beauty</option>
+              <option>saving</option>
+              <option>education</option>
+              <option>donation</option>
+              <option>pet</option>
+              <option>congratulations and condolences</option>
+              <option>subscription</option>
             </select>
           </div>
 
@@ -64,7 +75,8 @@
             <label for="method" class="form-label">Payment Method</label>
             <select id="method" class="form-control" v-model="addSpendingData.paymentMethod">
               <option disabled value="">Choose payment method</option>
-              <option>card</option>
+              <option>dedit card</option>
+              <option>credit card</option>
               <option>cash</option>
             </select>
           </div>
@@ -115,8 +127,19 @@
             <select id="category" class="form-control" v-model="addIncomeData.category">
               <option disabled value="">Choose category</option>
               <option>salary</option>
+              <option>a bonus</option>
+              <option>business income</option>
               <option>part-time job</option>
+              <option>pocket money</option>
+              <option>Financial income</option>
+              <option>insurance money</option>
               <option>scholarship</option>
+              <option>secondhand transaction</option>
+              <option>SNS</option>
+              <option>apptech</option>
+              <option>going dutch</option>
+              <option>other income</option>
+              
             </select>
           </div>
 
@@ -172,9 +195,7 @@
           >Update</base-button
         >
         <base-button type="danger" @click="deleteEvent">Delete</base-button>
-        <button type="button" class="btn btn-link ml-auto" @click="closeModal">
-          Close
-        </button>
+        <button type="button" class="btn btn-link ml-auto" @click="closeModal">Close</button>
 
       </template>
     </modal>
@@ -209,15 +230,16 @@ let addSpendingData = ref({
   title: "",
   amount: 0,
   memo: ""
+  
 });
 
-let addIncomeData = {
+let addIncomeData = ref({
   category: "",
   date: "",
   title: "",
   amount: 0,
   memo: ""
-};
+});
 
 let model = {
   allDay: true,
@@ -254,11 +276,29 @@ const closeModal = () =>{
   addSpendingData.value.amount = 0;
   addSpendingData.value.memo = "";
 
-  addIncomeData.category = "";
-  addIncomeData.date = "";
-  addIncomeData.title = "";
-  addIncomeData.amount = 0;
-  addIncomeData.memo = "";
+  addIncomeData.value.category = "";
+  addIncomeData.value.date = "";
+  addIncomeData.value.title = "";
+  addIncomeData.value.amount = 0;
+  addIncomeData.value.memo = "";
+};
+
+const openAddSpendingModal = () => {
+  addSpendingData.value.date = getCurrentDate();
+  showAddSpendingModal.value = true;
+};
+
+const openAddIncomeModal = () => {
+  addIncomeData.value.date = getCurrentDate();
+  showAddIncomeModal.value = true;
+};
+
+const getCurrentDate = () => {
+  const today = new Date();
+  const y = today.getFullYear();
+  const m = String(today.getMonth() + 1).padStart(2, '0');
+  const d = String(today.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 };
 
 const initCalendar = () => {
@@ -290,21 +330,11 @@ const initCalendar = () => {
       {
         id: "I2024-06-13",
         title: "+1600",
-        start: new Date(y, m, d, 12, 0),
+        start: new Date(y, m, d),
         allDay: true,
       }
     ]
   });
-
-  // const initEvents = async () => {
-  //   try {
-  //     let response = await axios.get("/data");
-  //     console.log(response.data);
-
-  //   } catch (error) {
-  //     console.error('Error : ', error);
-  //   }
-  // };
 
   calendar.render();
 };
@@ -317,35 +347,10 @@ const prev = () => {
   calendar.prev();
 };
 
-// let model = {
-//   allDay: true,
-//   id: "",
-//   title: "title",
-//   start: "",
-//   backgroundColor: ""
-// };
-
 const saveEvent = () => {
-  // const findId = "S" + addSpendingData.date;
-
-  // model.id = "S" + addSpendingData.date;
-  // model.title = addSpendingData.amount;
-  // model.start = addSpendingData.date;
-  // model.backgroundColor = "red";
-
-  calendar.addEvent(addSpendingData);
+  calendar.addEvent(addSpendingData.value);
   showAddSpendingModal.value = false;
 };
-
-// const addEvent = async (event) => {
-//     try {
-//         let response = await axios.get("/data?");
-
-//         await axios.post('/api/members', event);
-//     } catch (error) {
-//         console.error('Error : ', error);
-//     }
-// };
 
 const updateEvent = (eventId, newTitle, newStartDate) =>{
   const event = calendar.getEventById(eventId);
@@ -360,11 +365,6 @@ const updateEvent = (eventId, newTitle, newStartDate) =>{
 }
 
 const editEvent = () => {
-  // let index = calendar.events.findIndex((e) => e.title === model.value.title);
-  // if (index !== -1) {
-  //   calendar.events.splice(index, 1, model.value);
-  // }
-
   updateEvent("S2024-06-13T03:00:00.000Z", 'title', new Date(y, m, d + 1, 12, 0));
 
   showEditModal.value = false;
@@ -385,8 +385,8 @@ const goToSearch = () =>{
 onMounted(() => {
   initCalendar();
 });
-
 </script>
+
 
 <style scoped>
 img {
