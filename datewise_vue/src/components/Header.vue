@@ -41,8 +41,10 @@ export default {
 </script>
 
 <style>
-* {
-    font-family: "DM Serif Display", serif;
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Orbit&display=swap');
+
+h2 {
+    font-family: "DM Serif Text", serif;
     font-weight: bold;
     font-style: normal;
     letter-spacing: 1px;

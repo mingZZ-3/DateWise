@@ -2,6 +2,8 @@
   "data": [
     {
       "date": "2024-06-12",
+      "spending_total" : 2000,
+      "income_total" : 100000,
       "spending": [
         {
           "method": "card",
@@ -36,6 +38,8 @@
 
     {
       "date": "2024-06-13",
+      "spending_total" : 25000,
+      "income_total" : 200000,
       "spending": [
         {
           "method": "card",

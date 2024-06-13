@@ -48,6 +48,8 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Orbit&display=swap');
+
 #moneyFormat {
     text-align: end; 
     margin-top: 15px; 
@@ -62,4 +64,18 @@ export default {
     color: #3E51B5;
     font-style: italic; 
 }
+
+
+h4 {
+  font-family: "DM Serif Text", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h3 {
+  font-family: "DM Serif Text", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
 </style>

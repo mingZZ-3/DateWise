@@ -110,6 +110,15 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Orbit&display=swap');
+
+i, span {
+    font-family: "DM Serif Text", serif;
+    font-weight: bold;
+    font-style: normal;
+    letter-spacing: 1px;
+}
+
 .material-symbols-outlined {
   font-variation-settings:
   'FILL' 0,

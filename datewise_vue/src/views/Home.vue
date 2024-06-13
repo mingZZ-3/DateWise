@@ -97,37 +97,27 @@ import MainHeader from '@/components/MainHeader.vue'
 import MoneyBox from '@/components/MoneyBox.vue'
 import GradientLineChart from "@/views/pages/components/GradientLineChart.vue";
 import SimpleBookingCard from "@/views/pages/components/SimpleBookingCard.vue";
-import axios from 'axios';
-import {ref} from 'vue';
+import { storeToRefs } from 'pinia';
+import { useKakaoStore } from '@/store/kakaoStore.js'
+import { onMounted } from 'vue';
 
 
-const recommendList = ref([]);
+const KakaoStore = useKakaoStore();
+const { recommendList } = storeToRefs(KakaoStore);
 
-const recommend = async () => {
-  try {
-      console.log("recommend")
-      let data = {
-        "category_group_code" : "FD6",
-        "x": "127.05902969025047",
-        "y": "37.51207412593136",
-        "size" : 3
-      };
-      const response = await axios.get("https://dapi.kakao.com/v2/local/search/category.json", {
-        params : data,
-        headers : {
-          'Content-Type': 'application/json',
-          "Authorization" : 'KakaoAK cb8c6c7d8d8e084e5b0b35ddc4b64b78',
-          },
-        }
-      );
-      
-      if (response.status == 200) {
-        recommendList.value = response.data.documents;
-        console.log(recommendList.value);
-      }
-  } catch(e) {
-    console.log("error", e)
-  }
-};
-recommend();
+onMounted(() => {
+  KakaoStore.setSize(3);
+  KakaoStore.recommend();
+});
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Orbit&display=swap');
+
+h4, i, p {
+    font-family: "DM Serif Text", serif;
+    font-weight: bold;
+    font-style: normal;
+    letter-spacing: 1px;
+}
+</style>

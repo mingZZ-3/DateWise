@@ -1,6 +1,7 @@
 <template>
   <Temp title="Monthly Analytics" type="4"></Temp>
 
+  <!-- pie chart -->
   <div class="py-4 container-fluid mt-n6">
     <div class="mt-4 row">
       <div class="col-lg-6 col-12">
@@ -29,6 +30,7 @@
         </div>
       </div>
 
+      <!-- line chart -->
       <div class="col-lg-6 col-12">
         <div class="card z-index-2 mt-4">
           <div class="card-header p-3 pt-2">
@@ -74,6 +76,7 @@
       </div>
     </div>
 
+    <!-- bar chart -->
     <div class="card z-index-2 mt-4">
       <div class="card-header p-3 pt-2">
         <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">
