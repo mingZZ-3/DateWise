@@ -210,7 +210,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
-// import axios from 'axios';
+import axios from 'axios';
 
 import Modal from "./Modal";
 import Header from "@/components/Header.vue"
@@ -230,7 +230,6 @@ let addSpendingData = ref({
   title: "",
   amount: 0,
   memo: ""
-  
 });
 
 let addIncomeData = ref({
@@ -267,29 +266,29 @@ const closeModal = () =>{
   showAddSpendingModal.value = false;
   showAddIncomeModal.value = false;
   showEditModal.value = false;
+};
+
+const openAddSpendingModal = () => {
+  addSpendingData.value.date = getCurrentDate();
 
   addSpendingData.value.paymentMethod = "";
   addSpendingData.value.category = "";
-  addSpendingData.value.date = "";
   addSpendingData.value.place = "";
   addSpendingData.value.title = "";
   addSpendingData.value.amount = 0;
   addSpendingData.value.memo = "";
 
-  addIncomeData.value.category = "";
-  addIncomeData.value.date = "";
-  addIncomeData.value.title = "";
-  addIncomeData.value.amount = 0;
-  addIncomeData.value.memo = "";
-};
-
-const openAddSpendingModal = () => {
-  addSpendingData.value.date = getCurrentDate();
   showAddSpendingModal.value = true;
 };
 
 const openAddIncomeModal = () => {
   addIncomeData.value.date = getCurrentDate();
+
+  addIncomeData.value.category = "";
+  addIncomeData.value.title = "";
+  addIncomeData.value.amount = 0;
+  addIncomeData.value.memo = "";
+
   showAddIncomeModal.value = true;
 };
 
@@ -300,6 +299,30 @@ const getCurrentDate = () => {
   const d = String(today.getDate()).padStart(2, '0');
   return `${y}-${m}-${d}`;
 };
+
+const initEvents = async ()=>{
+  try {
+    const response = await axios.get("http://localhost:3000/data");
+
+    for(let event of response.data){
+      const date = event.date;
+
+      model.id = "S" + date;
+      model.title = -event.spending_total;
+      model.start = date;
+      model.backgroundColor = "red";
+      calendar.addEvent(model);
+
+      model.id = "I" + date;
+      model.title = "+" + String(event.income_total);
+      model.backgroundColor = "";
+
+      calendar.addEvent(model);
+    }
+  } catch (error) {
+    console.error('Error : ', error);
+  }
+}
 
 const initCalendar = () => {
   const calendarEl = document.getElementById("fullCalendar");
@@ -319,23 +342,10 @@ const initCalendar = () => {
       model.end = event.end;
       showEditModal.value = true;
     },
-    events: [
-      {
-        id: "S2024-06-13",
-        title: "-2000",
-        start: new Date(y, m, d),
-        allDay: true,
-        backgroundColor: 'red'
-      },
-      {
-        id: "I2024-06-13",
-        title: "+1600",
-        start: new Date(y, m, d),
-        allDay: true,
-      }
-    ]
+    events: []
   });
 
+  initEvents();
   calendar.render();
 };
 
@@ -346,14 +356,6 @@ const next = () => {
 const prev = () => {
   calendar.prev();
 };
-
-// let model = {
-//   allDay: true,
-//   id: "",
-//   title: "title",
-//   start: "",
-//   backgroundColor: ""
-// };
 
 const saveSpendingEvent = () => {
   const findId = "S" + addSpendingData.value.date;
@@ -397,21 +399,6 @@ const saveIncomeEvent = () => {
   }
 
   showAddIncomeModal.value = false;
-};
-
-// const addEvent = async (event) => {
-//     try {
-//         let response = await axios.get("/data?");
-
-//         await axios.post('/api/members', event);
-//     } catch (error) {
-//         console.error('Error : ', error);
-//     }
-// };
-
-const saveEvent = () => {
-  calendar.addEvent(addSpendingData.value);
-  showAddSpendingModal.value = false;
 };
 
 const updateEvent = (eventId, newTitle, newStartDate) =>{
