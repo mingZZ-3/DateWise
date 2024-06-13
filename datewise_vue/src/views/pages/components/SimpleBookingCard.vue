@@ -1,14 +1,14 @@
 <script setup>
 defineProps({
-  image: {
-    type: String,
-    required: true,
-  },
   categories: {
     type: String,
     required: true,
   },
   title: {
+    type: String,
+    required: true,
+  },
+  urlLink: {
     type: String,
     required: true,
   },
@@ -27,21 +27,15 @@ defineProps({
     }),
   },
 });
+
+const goMap = (link) => {
+  window.open(link, '_blank');
+}
 </script>
 <template>
   <div class="card">
-    <div class="card-header p-0 mx-3 mt-n4 position-relative z-index-2">
-      <a class="d-block blur-shadow-image">
-        <img
-          :src="image"
-          alt="img-blur-shadow"
-          class="img-fluid border-radius-lg"
-          loading="lazy"
-        />
-      </a>
-    </div>
     <div class="card-body pt-3">
-      <p class="text-dark mb-2 text-sm">
+      <p class="text-dark mb-1 text-sm">
         {{ categories }}
       </p>
       <a :href="action.route">
@@ -50,7 +44,7 @@ defineProps({
       <p>
         {{ description }}
       </p>
-      <button class="btn btn-sm mb-0" :class="`btn-outline-${action.color}`">
+      <button class="btn btn-sm mb-0" :class="`btn-outline-${action.color}`" @click="goMap(urlLink)">
         {{ action.label }}
       </button>
     </div>

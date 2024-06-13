@@ -1,95 +1,74 @@
 <template>
-    <div class="container">
-        <h2>For date</h2>
-    </div>
+    <div class="mb-4">
+      <Header title="Date Recommend" type="3"/>
 
-  <section class="pt-5 pb-0">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-md-6">
-          <SimpleBookingCard
-            class="mt-5 mt-md-0"
-            :image="product1"
-            categories="맛집"
-            title="이이요"
-            description="서울 광진구 능동로32길 6"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <SimpleBookingCard
-            class="mt-5 mt-md-0"
-            :image="product2"
-            categories="맛집"
-            title="깍뚝"
-            description="서울 광진구 능동로19길 36"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <SimpleBookingCard
-            class="mt-5 mt-lg-0"
-            :image="product3"
-            categories="맛집"
-            title="은혜즉석떡볶이"
-            description="서울 광진구 광나루로 381-1"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <SimpleBookingCard
-            class="mt-5"
-            :image="product4"
-            categories="맛집"
-            title="천미향"
-            description="서울 광진구 능동로 237"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <SimpleBookingCard
-            class="mt-5"
-            :image="product5"
-            categories="맛집"
 
-            title="뱃놈"
-            description="서울 광진구 광나루로19길 9"
-          />
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <SimpleBookingCard
-            class="mt-5"
-            :image="product6"
-            categories="맛집"
-            title="마당족발"
-            description="서울 광진구 능동로 173"
-          />
-        </div>
-        <div class="col-sm-7 ms-auto text-end">
-          <MaterialPagination class="mt-4">
-            <MaterialPaginationItem prev class="ms-auto" />
-            <MaterialPaginationItem label="1" active/>
-            <MaterialPaginationItem label="2" />
-            <MaterialPaginationItem label="3" />
-            <MaterialPaginationItem label="4" />
-            <MaterialPaginationItem label="5" />
-            <MaterialPaginationItem next />
-          </MaterialPagination>
-        </div>
+      <!-- recommend -->
+      <div class="mt-n3 ms-5 me-5">
+        <div class="col col-12">
+            <div class="card p-4">
+              <div>
+                <h2 style="color: #380A15;">For Date</h2>
+                <h5 style="color: #827B7D;">we recommend places based on what you visited recently</h5>
+              </div>
+              <div class="card-body mt-2">
+                <section class="pb-0">
+                  <div class="row">
+                      <div 
+                        class="col-lg-4 col-md-6 mb-5" 
+                        v-for="item in recommendList" :key="item.id"
+                      >
+                        <SimpleBookingCard
+                          class="mt-md-0"
+                          :urlLink="item.place_url"
+                          :categories="item.category_group_name"
+                          :title="item.place_name"
+                          :description="item.address_name"
+                        />
+                      </div>
+                    </div>
+                </section>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
-  </section>
 </template>
 
 <script setup>
 // example  component
 import SimpleBookingCard from "@/views/pages/components/SimpleBookingCard.vue";
+import Header from '@/components/Header.vue';
+import axios from 'axios';
+import {ref} from 'vue';
 
-//Vue Material Kit 2 Pro components
-import MaterialPagination from "@/components/MaterialPagination.vue";
-import MaterialPaginationItem from "@/components/MaterialPaginationItem.vue";
+const recommendList = ref([]);
 
-// images
-import product1 from "@/assets/img/products/product-2-min.jpg";
-import product2 from "@/assets/img/products/product-1-min.jpg";
-import product3 from "@/assets/img/products/product-3-min.jpg";
-import product4 from "@/assets/img/products/product-5-min.jpg";
-import product5 from "@/assets/img/products/product-6-min.jpg";
-import product6 from "@/assets/img/products/product-7-min.jpg";
+const recommend = async () => {
+  try {
+      let data = {
+        "category_group_code" : "FD6",
+        "x": "127.05902969025047",
+        "y": "37.51207412593136",
+        "size" : 15
+      };
+      const response = await axios.get("https://dapi.kakao.com/v2/local/search/category.json", {
+        params : data,
+        headers : {
+          'Content-Type': 'application/json',
+          "Authorization" : 'KakaoAK cb8c6c7d8d8e084e5b0b35ddc4b64b78',
+          },
+        }
+      );
+      
+      if (response.status == 200) {
+        recommendList.value = response.data.documents;
+        console.log(recommendList.value);
+      }
+  } catch(e) {
+    console.log("error", e)
+  }
+};
+
+recommend();
 </script>
