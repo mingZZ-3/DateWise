@@ -24,19 +24,13 @@
           </div>
           
           <div class="d-flex justify-content-end" style="margin-right: 20px;">
-            <base-button
-              class="btn btn-lg btn-secondary"
-              @click="changeView('dayGridWeek')"
-            >
+            <button class="btn btn-lg btn-secondary" @click="showAddSpendingModal = true">
               Add Spending
-            </base-button>
-            <base-button
-              class="btn btn-lg btn-secondary"
-              @click="changeView('timeGridDay')"
-              style="margin-left: 5px;"
-            >
+            </button>
+
+            <button class="btn btn-lg btn-secondary" @click="showAddIncomeModal = true" style="margin-left: 5px;">
               Add Income
-            </base-button>
+            </button>
           </div>
 
           <!-- Card body -->
@@ -48,52 +42,107 @@
       </div>
     </div>
 
-    <modal v-model:show="showAddModal" modal-classes="modal-secondary">
+    <modal v-model:show="showAddSpendingModal" modal-classes="modal-secondary">
       <form class="new-event--form" @submit.prevent="saveEvent">
-        <base-input
-          name="title"
-          label="Event title"
-          placeholder="Event Title"
-          v-model="model.title"
-          input-classes="form-control-alternative new-event--title"
-        >
-        </base-input>
         <div class="form-group">
-          <label class="form-control-label d-block mb-3">Status color</label>
-          <div class="btn-group btn-group-toggle btn-group-colors event-tag">
-            <label
-              v-for="color in eventColors"
-              :key="color"
-              class="btn"
-              :class="[color, { 'active focused': model.className === color }]"
-            >
-              <input
-                v-model="model.className"
-                type="radio"
-                name="event-tag"
-                :value="color"
-                autocomplete="off"
-              />
-            </label>
+          <div class="form-group">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" id="date" class="form-control" v-model="addSpendingData.date">
+          </div>
+
+          <div class="form-group">
+            <label for="category" class="form-label">Category</label>
+            <select id="category" class="form-control" v-model="addSpendingData.category">
+              <option disabled value="">Choose category</option>
+              <option>salary</option>
+              <option>part-time job</option>
+              <option>scholarship</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="method" class="form-label">Payment Method</label>
+            <select id="method" class="form-control" v-model="addSpendingData.paymentMethod">
+              <option disabled value="">Choose payment method</option>
+              <option>card</option>
+              <option>cash</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="place" class="form-label">Place</label>
+            <input type="text" id="place" class="form-control" v-model="addSpendingData.place">
+          </div>
+
+          <div class="form-group">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" class="form-control" v-model="addSpendingData.title">
+          </div>
+
+          <div class="form-group">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" id="amount" class="form-control" v-model="addSpendingData.amount">
+          </div>
+          
+          <div class="form-group">
+            <label for="memo" class="form-label">Memo</label>
+            <textarea id="memo" class="form-control" v-model="addSpendingData.memo"></textarea>
           </div>
         </div>
-        <input type="hidden" class="new-event--start" />
-        <input type="hidden" class="new-event--end" />
       </form>
 
       <template v-slot:footer>
-        <button
-          type="submit"
-          class="btn btn-primary new-event--add"
-          @click="saveEvent"
-        >
+        <button type="submit" class="btn btn-primary btn-link new-event--add" @click="saveEvent">
           Add event
         </button>
-        <button
-          type="button"
-          class="btn btn-link ml-auto"
-          @click="showAddModal = false"
-        >
+
+        <button type="button" class="btn btn-primary btn-link ml-auto" @click="closeModal">
+          Close
+        </button>
+      </template>
+    </modal>
+    
+    <modal v-model:show="showAddIncomeModal" modal-classes="modal-secondary">
+      <form class="new-event--form" @submit.prevent="saveEvent">
+        <div class="form-group">
+          <div class="form-group">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" id="date" class="form-control" v-model="addIncomeData.date">
+          </div>
+
+          <div class="form-group">
+            <label for="category" class="form-label">Category</label>
+            <select id="category" class="form-control" v-model="addIncomeData.category">
+              <option disabled value="">Choose category</option>
+              <option>salary</option>
+              <option>part-time job</option>
+              <option>scholarship</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" class="form-control" v-model="addIncomeData.title">
+          </div>
+
+          <div class="form-group">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" id="amount" class="form-control" v-model="addIncomeData.amount">
+          </div>
+          
+          <div class="form-group">
+            <label for="memo" class="form-label">Memo</label>
+            <textarea id="memo" class="form-control" v-model="addIncomeData.memo"></textarea>
+          </div>
+        </div>
+      </form>
+
+      <template v-slot:footer>
+        <button type="submit" class="btn btn-primary btn-link new-event--add" @click="saveEvent">
+          Add event
+        </button>
+
+        <button type="button" class="btn btn-primary btn-link ml-auto" @click="closeModal">
           Close
         </button>
       </template>
@@ -101,33 +150,6 @@
 
     <modal v-model:show="showEditModal" modal-classes="modal-secondary">
       <form class="edit-event--form" @submit.prevent="editEvent">
-        <base-input
-          name="title2"
-          label="Event title"
-          placeholder="Event Title"
-          v-model="model.title"
-          input-classes="form-control-alternative new-event--title"
-        >
-        </base-input>
-        <div class="form-group">
-          <label class="form-control-label d-block mb-3">Status color</label>
-          <div class="btn-group btn-group-toggle btn-group-colors event-tag">
-            <label
-              v-for="color in eventColors"
-              :key="color"
-              class="btn"
-              :class="[color, { 'active focused': model.className === color }]"
-            >
-              <input
-                v-model="model.className"
-                type="radio"
-                name="event-tag"
-                :value="color"
-                autocomplete="off"
-              />
-            </label>
-          </div>
-        </div>
         <base-input name="textarea" label="Description">
           <textarea
             v-model="model.description"
@@ -150,9 +172,10 @@
           >Update</base-button
         >
         <base-button type="danger" @click="deleteEvent">Delete</base-button>
-        <base-button type="link" class="ml-auto" @click="showAddModal = false"
-          >Close</base-button
-        >
+        <button type="button" class="btn btn-link ml-auto" @click="closeModal">
+          Close
+        </button>
+
       </template>
     </modal>
 
@@ -163,10 +186,10 @@
 import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import timeGridDay from "@fullcalendar/timegrid";
 
-import { ref, reactive, onMounted, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
+// import axios from 'axios';
 
 import Modal from "./Modal";
 import Header from "@/components/Header.vue"
@@ -178,89 +201,35 @@ const y = today.getFullYear();
 const m = today.getMonth();
 const d = today.getDate();
 
-const events = reactive([
-  {
-    title: "All Day Event",
-    start: new Date(y, m, 1),
-    className: "event-default",
-  },
-  {
-    id: 999,
-    title: "Repeating Event",
-    start: new Date(y, m, d - 4, 6, 0),
-    allDay: false,
-    className: "event-green",
-  },
-  {
-    id: 999,
-    title: "Repeating Event",
-    start: new Date(y, m, d + 3, 6, 0),
-    allDay: false,
-    className: "event-orange",
-  },
-  {
-    title: "Meeting",
-    start: new Date(y, m, d - 1, 10, 30),
-    allDay: false,
-    className: "event-green",
-  },
-  {
-    title: "Lunch",
-    start: new Date(y, m, d + 7, 12, 0),
-    end: new Date(y, m, d + 7, 14, 0),
-    allDay: false,
-    className: "event-red",
-  },
-  {
-    title: "Md-pro Launch",
-    start: new Date(y, m, d - 2, 12, 0),
-    allDay: true,
-    className: "event-azure",
-  },
-  {
-    title: "Birthday Party",
-    start: new Date(y, m, d + 1, 19, 0),
-    end: new Date(y, m, d + 1, 22, 30),
-    allDay: false,
-    className: "event-azure",
-  },
-  {
-    title: "Click for Creative Tim",
-    start: new Date(y, m, 21),
-    end: new Date(y, m, 22),
-    url: "http://www.creative-tim.com/",
-    className: "event-orange",
-  },
-  {
-    title: "Click for Google",
-    start: new Date(y, m, 21),
-    end: new Date(y, m, 22),
-    url: "http://www.creative-tim.com/",
-    className: "event-orange",
-  },
-]);
-
-const model = reactive({
-  title: "New event",
-  className: "bg-default",
-  description: "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-  start: "",
-  end: "",
+let addSpendingData = ref({
+  paymentMethod: "",
+  category: "",
+  date: "",
+  place: "",
+  title: "",
+  amount: 0,
+  memo: ""
 });
 
-const showAddModal = ref(false);
-const showEditModal = ref(false);
+let addIncomeData = {
+  category: "",
+  date: "",
+  title: "",
+  amount: 0,
+  memo: ""
+};
 
-const eventColors = [
-  "bg-info",
-  "bg-orange",
-  "bg-red",
-  "bg-green",
-  "bg-default",
-  "bg-blue",
-  "bg-purple",
-  "bg-yellow",
-];
+let model = {
+  allDay: true,
+  id: "",
+  title: "title",
+  start: "",
+  backgroundColor: ""
+};
+
+const showAddSpendingModal = ref(false);
+const showAddIncomeModal = ref(false);
+const showEditModal = ref(false);
 
 const currentMonthYear = computed(() => {
   const now = new Date();
@@ -272,32 +241,72 @@ const currentMonthYear = computed(() => {
 
 let calendar;
 
+const closeModal = () =>{
+  showAddSpendingModal.value = false;
+  showAddIncomeModal.value = false;
+  showEditModal.value = false;
+
+  addSpendingData.value.paymentMethod = "";
+  addSpendingData.value.category = "";
+  addSpendingData.value.date = "";
+  addSpendingData.value.place = "";
+  addSpendingData.value.title = "";
+  addSpendingData.value.amount = 0;
+  addSpendingData.value.memo = "";
+
+  addIncomeData.category = "";
+  addIncomeData.date = "";
+  addIncomeData.title = "";
+  addIncomeData.amount = 0;
+  addIncomeData.memo = "";
+};
+
 const initCalendar = () => {
   const calendarEl = document.getElementById("fullCalendar");
+
   calendar = new Calendar(calendarEl, {
-    plugins: [dayGridPlugin, timeGridDay, interactionPlugin],
+    plugins: [dayGridPlugin, interactionPlugin],
     selectable: true,
     headerToolbar: false,
-    select: () => {
-      showAddModal.value = true;
-      model.start = new Date().toISOString().split('T')[0];
-      model.end = new Date().toISOString().split('T')[0];
+    
+    select: () => {              // 캘린더에서 특정 날짜를 클릭했을 때
+      
     },
-    eventClick: (event) => {
+    eventClick: (event) => {        // 캘린더의 특정 이벤트를 클릭했을 때
       model.title = event.title;
       model.className = event.classNames ? event.classNames.join(" ") : "";
       model.start = event.start;
       model.end = event.end;
       showEditModal.value = true;
     },
-    events: events,
+    events: [
+      {
+        id: "S2024-06-13",
+        title: "-2000",
+        start: new Date(y, m, d),
+        allDay: true,
+        backgroundColor: 'red'
+      },
+      {
+        id: "I2024-06-13",
+        title: "+1600",
+        start: new Date(y, m, d, 12, 0),
+        allDay: true,
+      }
+    ]
   });
-  calendar.render();
-};
 
-const changeView = (newView) => {
-  calendar.changeView(newView);
-  calendar.view.title;
+  // const initEvents = async () => {
+  //   try {
+  //     let response = await axios.get("/data");
+  //     console.log(response.data);
+
+  //   } catch (error) {
+  //     console.error('Error : ', error);
+  //   }
+  // };
+
+  calendar.render();
 };
 
 const next = () => {
@@ -308,34 +317,63 @@ const prev = () => {
   calendar.prev();
 };
 
+// let model = {
+//   allDay: true,
+//   id: "",
+//   title: "title",
+//   start: "",
+//   backgroundColor: ""
+// };
+
 const saveEvent = () => {
-  if (model.title) {
-    let event = {
-      ...model,
-      allDay: true,
-    };
-    events.push(JSON.parse(JSON.stringify(event)));
-    console.log(events);
-    model.title = "";
-    model.eventColor = "bg-danger";
-    model.start = "";
-    model.end = "";
-  }
-  showAddModal.value = false;
+  // const findId = "S" + addSpendingData.date;
+
+  // model.id = "S" + addSpendingData.date;
+  // model.title = addSpendingData.amount;
+  // model.start = addSpendingData.date;
+  // model.backgroundColor = "red";
+
+  calendar.addEvent(addSpendingData);
+  showAddSpendingModal.value = false;
 };
 
-const editEvent = () => {
-  let index = events.findIndex((e) => e.title === model.title);
-  if (index !== -1) {
-    events.splice(index, 1, model);
+// const addEvent = async (event) => {
+//     try {
+//         let response = await axios.get("/data?");
+
+//         await axios.post('/api/members', event);
+//     } catch (error) {
+//         console.error('Error : ', error);
+//     }
+// };
+
+const updateEvent = (eventId, newTitle, newStartDate) =>{
+  const event = calendar.getEventById(eventId);
+
+  if (event) {
+    event.setProp('title', newTitle);     // 타이틀 수정
+    event.setDates(newStartDate);         // 시작일과 종료일 수정
+    event.setAllDay(true);
+  } else {
+    console.error(`Event with id ${eventId} not found`);
   }
+}
+
+const editEvent = () => {
+  // let index = calendar.events.findIndex((e) => e.title === model.value.title);
+  // if (index !== -1) {
+  //   calendar.events.splice(index, 1, model.value);
+  // }
+
+  updateEvent("S2024-06-13T03:00:00.000Z", 'title', new Date(y, m, d + 1, 12, 0));
+
   showEditModal.value = false;
 };
 
 const deleteEvent = () => {
-  let index = events.findIndex((e) => e.title === model.title);
+  let index = calendar.events.value.findIndex((e) => e.title === model.value.title);
   if (index !== -1) {
-    events.splice(index, 1);
+    calendar.events.value.splice(index, 1);
   }
   showEditModal.value = false;
 };
@@ -357,5 +395,29 @@ img {
   margin-right: 10px;
   float: right;
   width: 5%;
+}
+.modal-content {
+ background-color: #F7F6F7;
+ border: none;
+ border-radius: 8px;
+ padding: 20px;
+ color: #815158;
+}
+.form-label {
+ display: block;
+ font-weight: bold;
+ color: #815158;
+ margin-bottom: 8px;
+}
+.form-control {
+ width: 100%;
+ padding: 8px;
+ margin-bottom: 16px;
+ border: 1px solid #ddd;
+ border-radius: 4px;
+}
+.btn-primary {
+ background-color: #815158;
+ border-color: #815158;
 }
 </style>
