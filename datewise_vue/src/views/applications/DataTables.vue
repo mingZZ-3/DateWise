@@ -1,21 +1,26 @@
 <template>
-  <div class="table-responsive">
-    <table ref="dataTable" id="datatable-search" class="table table-flush">
-      <thead class="thead-light">
-        <tr>
-          <th>Category</th>
-          <th>Title</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in data" :key="index" @click="emitter.emit('item_edit_click', originalData, index, )">
-          <td id="cate">{{ item.category }}</td>
-          <td id="title">{{ item.title }}</td>
-          <td id="amount">{{ item.amount }}원</td>
-        </tr>
-      </tbody>
-    </table>
+  <div v-if="data.length === 0">
+    <h4 id="nolist">Please add your daily life :)</h4>
+    </div>
+    <div v-else>
+      <div class="table-responsive">
+        <table ref="dataTable" id="datatable-search" class="table table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th>Category</th>
+              <th>Title</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in data" :key="index" @click="emitter.emit('item_edit_click', { data, item })">
+              <td id="cate">{{ item.category }}</td>
+              <td id="title">{{ item.title }}</td>
+              <td id="amount">{{ item.amount }}원</td>
+            </tr>
+          </tbody>
+        </table>
+    </div> 
   </div>
 </template>
 
@@ -27,16 +32,12 @@ export default {
       type: Array,
       required: true,
     },
-    originalData: {
-      type: Array,
-      required: true,
-    },
   },
 };
 </script>
 
 <style scoped>
-td {
+td, h2, h4{
   padding: 20px;
   font-family: "DM Serif Display", serif;
   color: #380A15;
@@ -61,6 +62,12 @@ td {
 
 #amount {
   font-size: 20px;
+}
+
+#nolist {
+  padding: 20px;
+  color: #827B7D;
+  margin-left: 10px;
 }
 
 .custom-table th:first-child,

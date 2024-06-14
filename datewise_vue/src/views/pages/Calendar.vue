@@ -14,44 +14,57 @@
           <div class="card-header">
               <h5 class="mb-0" style="color: #380A15; font-size: 30px;">Result</h5>
           </div>
-          <DataTables :data="filteredData"/>
+          <DataTables :data="totallist"/>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import TopHeader from "@/components/Header.vue"
 import Calendar from "@/views/applications/Calendar.vue";
 import DataTables from '../applications//DataTables.vue';
 import { getSingleData } from '@/views/applications/DataApi.js';
 import MoneyBox from '@/components/MoneyBox.vue'
-    import { getCurrentInstance, ref } from 'vue';
+import { getCurrentInstance, ref } from 'vue';
 
-export default {
-  name: "CalendarPage",
-  components: { 
-    Calendar,
-    DataTables,
-    MoneyBox,
-    TopHeader
-  },
-  setup()
-  {
-    const internalInstance = getCurrentInstance(); 
-    const emitter = internalInstance.appContext.config.globalProperties.emitter;
 
-    const dayClick = async (date) => {
-      const tmp = await getSingleData(date);
-      const totallist = ref([]);
-      totallist.value.push(tmp.spending);
-      totallist.value.push(tmp.income);
-      console.log(tmp, totallist.value);
-    }
+const internalInstance = getCurrentInstance(); 
+const emitter = internalInstance.appContext.config.globalProperties.emitter;
+const totallist = ref([]);
 
-    emitter.on('day_click', dayClick);
+const dayClick = async (date) => {
+  try {
+    totallist.value = [];
+    const response = await getSingleData(date);
+
+    totallist.value = totallist.value.concat(
+      response.spending.map((tmp, index) => (
+        {
+          ...tmp,
+          type: "spending",
+          index: index,
+          date: response.date
+        }
+      ))
+    );
+    totallist.value = totallist.value.concat(
+      response.income.map((tmp, index) => (
+        {
+          ...tmp,
+          type: "income",
+          index: index,
+          date: response.date
+        }
+      ))
+    );
+      
+    console.log(totallist.value);
+  } catch (error) {
+    totallist.value = [];
   }
- };
+}
+emitter.on('day_click', dayClick);
 </script>
 
 <style>

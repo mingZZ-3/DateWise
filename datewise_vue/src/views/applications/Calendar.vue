@@ -552,9 +552,13 @@ const showEditModal = ref(false);
 const internalInstance = getCurrentInstance(); 
 const emitter = internalInstance.appContext.config.globalProperties.emitter;
 
-const itemEditClick = (data, index) => {
+const itemEditClick = (obj) => {
     // 모달 뜨고, 모달에 데이터 바인딩하기
-    alert(data + index);
+    console.log("data");
+    console.log(obj.data);
+    console.log("item");
+    console.log(obj.item);
+    // editIncomeData
 };
 
 emitter.on('item_edit_click', itemEditClick);
@@ -669,6 +673,17 @@ const getCurrentMonthYear = () => {
   const year = now.getFullYear();
   currentMonthYear.value = `${month} ${year}`;
 };
+
+function getFormattedDate() {
+  const today = new Date();
+  
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
 
 const prev = () => {
   calendar.prev();
@@ -886,6 +901,7 @@ const goToSearch = () => {
 onMounted(() => {
   initCalendar();
   getCurrentMonthYear();
+  emitter.emit('day_click', getFormattedDate());
 });
 </script>
 
