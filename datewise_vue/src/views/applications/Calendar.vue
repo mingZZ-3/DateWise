@@ -52,20 +52,20 @@
         <label for="category" class="form-label">Category</label>
         <select id="category" class="form-control" v-model="addSpendingData.category">
           <option disabled value="">Choose category</option>
-          <option>food expenses</option>
-          <option>vehicle maintenance cost</option>
-          <option>traffic</option>
-          <option>shopping</option>
-          <option>medical care</option>
-          <option>utility bills</option>
-          <option>insurance</option>
-          <option>beauty</option>
-          <option>saving</option>
-          <option>education</option>
-          <option>donation</option>
-          <option>pet</option>
-          <option>congratulations and condolences</option>
-          <option>subscription</option>
+          <option>Food</option>
+          <option>Vehicle</option>
+          <option>Traffic</option>
+          <option>Shopping</option>
+          <option>Medical</option>
+          <option>Utility bill</option>
+          <option>Insurance</option>
+          <option>Beauty</option>
+          <option>Saving</option>
+          <option>Education</option>
+          <option>Donation</option>
+          <option>Pet</option>
+          <option>Congratulations and Condolences</option>
+          <option>Subscription</option>
         </select>
       </div>
 
@@ -73,9 +73,8 @@
         <label for="method" class="form-label">Payment Method</label>
         <select id="method" class="form-control" v-model="addSpendingData.paymentMethod">
           <option disabled value="">Choose payment method</option>
-          <option>dedit card</option>
-          <option>credit card</option>
-          <option>cash</option>
+          <option>Card</option>
+          <option>Cash</option>
         </select>
       </div>
 
@@ -119,19 +118,18 @@
         <label for="category" class="form-label">Category</label>
         <select id="category" class="form-control" v-model="addIncomeData.category">
           <option disabled value="">Choose category</option>
-          <option>salary</option>
-          <option>a bonus</option>
-          <option>business income</option>
-          <option>part-time job</option>
-          <option>pocket money</option>
-          <option>Financial income</option>
-          <option>insurance money</option>
-          <option>scholarship</option>
-          <option>secondhand transaction</option>
+          <option>Salary</option>
+          <option>Bonus</option>
+          <option>Part Time Job</option>
+          <option>Pocket Money</option>
+          <option>Financial Income</option>
+          <option>Insurance Money</option>
+          <option>Scholarship</option>
+          <option>Secondhand Transaction</option>
           <option>SNS</option>
-          <option>apptech</option>
-          <option>going dutch</option>
-          <option>other income</option>
+          <option>Apptech</option>
+          <option>Dutch</option>
+          <option>Other Income</option>
         </select>
       </div>
 
