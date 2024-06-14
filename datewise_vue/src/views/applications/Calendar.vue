@@ -104,11 +104,6 @@
 
       <div class="form-group">
         <label for="method" class="form-label">Payment Method</label>
-        <select
-          id="method"
-          class="form-control"
-          v-model="addSpendingData.paymentMethod"
-        >
         <select id="method" class="form-control" v-model="addSpendingData.method">
           <option disabled value="">Choose payment method</option>
           <option>Card</option>
@@ -596,8 +591,8 @@ const initEvents = async () => {
   try {
     const response = await axios.get('http://localhost:3000/data');
 
-    for (let event of response.data) {
-      const date = event.date;
+    for (let object of response.data) {
+      const date = object.date;
 
       if(object.spending_total != 0){
         model.id = "S" + date;
