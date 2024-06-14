@@ -1,5 +1,4 @@
 <template>
-  <Header title="Calendar" type="2"/>
   <div class="py-4 container">
     <div class="row">
       <div class="col">
@@ -71,7 +70,7 @@
 
       <div class="form-group">
         <label for="method" class="form-label">Payment Method</label>
-        <select id="method" class="form-control" v-model="addSpendingData.paymentMethod">
+        <select id="method" class="form-control" v-model="addSpendingData.method">
           <option disabled value="">Choose payment method</option>
           <option>Card</option>
           <option>Cash</option>
@@ -199,7 +198,10 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 import Modal from "./Modal";
-import Header from "@/components/Header.vue"
+// import Header from "@/components/Header.vue";
+import { getSingleData } from '@/views/applications/DataApi.js'
+import { postSingleData } from '@/views/applications/DataApi.js'
+import { updateSingleData } from '@/views/applications/DataApi.js'
 
 let calendar;
 const router = useRouter();
@@ -207,7 +209,7 @@ const router = useRouter();
 let currentMonthYear = ref("");
 
 let addSpendingData = ref({
-  paymentMethod: "",
+  method: "",
   category: "",
   date: "",
   place: "",
@@ -253,7 +255,7 @@ const getCurrentDate = () => {
 const openAddSpendingModal = () => {
   addSpendingData.value.date = getCurrentDate();
 
-  addSpendingData.value.paymentMethod = "";
+  addSpendingData.value.method = "";
   addSpendingData.value.category = "";
   addSpendingData.value.place = "";
   addSpendingData.value.title = "";
@@ -276,22 +278,28 @@ const openAddIncomeModal = () => {
 
 const initEvents = async ()=>{
   try {
-    const response = await axios.get("http://localhost:3000/data");
+    const response = await axios.get('http://localhost:3000/data');
 
-    for(let event of response.data){
-      const date = event.date;
+    for(let object of response.data){
+      const date = object.date;
 
-      model.id = "S" + date;
-      model.title = -event.spending_total;
-      model.start = date;
-      model.backgroundColor = "red";
-      calendar.addEvent(model);
+      if(object.spending_total != 0){
+        model.id = "S" + date;
+        model.title = -object.spending_total;
+        model.start = date;
+        model.backgroundColor = "red";
 
-      model.id = "I" + date;
-      model.title = "+" + String(event.income_total);
-      model.backgroundColor = "";
+        calendar.addEvent(model);
+      }
+      
+      if(object.income_total != 0){
+        model.id = "I" + date;
+        model.title = "+" + object.income_total;
+        model.start = date;
+        model.backgroundColor = "";
 
-      calendar.addEvent(model);
+        calendar.addEvent(model);
+      }
     }
   } catch (error) {
     console.error('Error : ', error);
@@ -309,11 +317,7 @@ const initCalendar = () => {
     select: () => {              // 캘린더에서 특정 날짜를 클릭했을 때
       
     },
-    eventClick: (event) => {        // 캘린더의 특정 이벤트를 클릭했을 때
-      model.title = event.title;
-      model.className = event.classNames ? event.classNames.join(" ") : "";
-      model.start = event.start;
-      model.end = event.end;
+    eventClick: () => {        // 캘린더의 특정 이벤트를 클릭했을 때
       showEditModal.value = true;
     },
     events: []
@@ -342,20 +346,60 @@ const next = () => {
   getCurrentMonthYear();
 };
 
-const saveSpendingEvent = () => {
+const saveSpendingEvent = async () => {
   const findId = "S" + addSpendingData.value.date;
   let event = calendar.getEventById(findId);
 
-  if (event) {    // id에 해당하는 이벤트가 있는 경우 -> 그 이벤트의 title(총 지출)에 입력한 지출을 더함
-    const existAmount = event.title;
-    const addAmount = addSpendingData.value.amount;
-    const finalAmount = Number(existAmount) - addAmount;
+  try {
+    const response = await getSingleData(addSpendingData.value.date);
 
-    event.setProp('title', finalAmount);
-  } else {    // id에 해당하는 이벤트가 없는 경우 -> 새롭게 넣어줌
+    // 기존에 값이 있는 경우
+    let object = response[0];
+
+    let pushObject = {
+      "method": addSpendingData.value.method,
+      "category": addSpendingData.value.category,
+      "title": addSpendingData.value.title,
+      "amount": addSpendingData.value.amount,
+      "memo": addSpendingData.value.memo,
+      "place": addSpendingData.value.place
+    };
+
+    object.spending.push(pushObject);
+    object.spending_total += addSpendingData.value.amount;
+
+    try{
+      await updateSingleData(object);
+      event.setProp('title', -object.spending_total);
+    } catch(error){
+      console.log(error);
+    }
+
+  } catch (error) {
+    // 기존에 값이 없는 경우
+    let object = {
+      "date": addSpendingData.value.date,
+      "spending_total": addSpendingData.value.amount,
+      "income_total": 0,
+      "spending": [
+        {
+          "method": addSpendingData.value.method,
+          "category": addSpendingData.value.category,
+          "title": addSpendingData.value.title,
+          "amount": addSpendingData.value.amount,
+          "memo": addSpendingData.value.memo,
+          "place": addSpendingData.value.place
+        }
+      ],
+      "income": [
+      ]
+    }
+
+    await postSingleData(object);
+
     model.id = findId;
-    model.title = -addSpendingData.value.amount;
-    model.start = addSpendingData.value.date;
+    model.title = -object.spending_total;
+    model.start = object.date;
     model.backgroundColor = "red";
 
     calendar.addEvent(model);
@@ -364,20 +408,54 @@ const saveSpendingEvent = () => {
   showAddSpendingModal.value = false;
 };
 
-const saveIncomeEvent = () => {
+const saveIncomeEvent = async () => {
   const findId = "I" + addIncomeData.value.date;
   let event = calendar.getEventById(findId);
 
-  if (event) {    // id에 해당하는 이벤트가 있는 경우 -> 그 이벤트의 title(총 지출)에 입력한 지출을 더함
-    const existAmount = event.title;
-    const addAmount = addIncomeData.value.amount;
-    const finalAmount = Number(existAmount) + addAmount;
+  try {
+    const response = await getSingleData(addIncomeData.value.date);
 
-    event.setProp('title', "+" + finalAmount);
-  } else {    // id에 해당하는 이벤트가 없는 경우 -> 새롭게 넣어줌
+    // 기존에 값이 있는 경우
+    let object = response[0];
+    let pushObject = {
+      "category": addIncomeData.value.category,
+      "title": addIncomeData.value.title,
+      "amount": addIncomeData.value.amount,
+      "memo": addIncomeData.value.memo
+    };
+
+    object.income.push(pushObject);
+    object.income_total += addIncomeData.value.amount;
+
+    try {
+      await updateSingleData(object);
+      event.setProp('title', "+" + object.income_total);
+    } catch (error) {
+      console.log(error);
+    }
+  } catch (error) {
+    // 기존에 값이 없는 경우
+    let object = {
+      "date": addIncomeData.value.date,
+      "spending_total": 0,
+      "income_total": addIncomeData.value.amount,
+      "spending": [
+      ],
+      "income": [
+        {
+          "category": addIncomeData.value.category,
+          "title": addIncomeData.value.title,
+          "amount": addIncomeData.value.amount,
+          "memo": addIncomeData.value.memo,
+        }
+      ]
+    }
+
+    await postSingleData(object);
+
     model.id = findId;
-    model.title = "+" + String(addIncomeData.value.amount);
-    model.start = addIncomeData.value.date;
+    model.title = object.income_total;
+    model.start = object.date;
     model.backgroundColor = "";
 
     calendar.addEvent(model);
