@@ -1,0 +1,130 @@
+{
+  "data": [
+    {
+      "date": "2024-06-12",
+      "spending_total": 673354,
+      "income_total": 825523,
+      "spending": [
+        {
+          "method": "card",
+          "category": "food",
+          "title": "굴림만두 지출",
+          "amount": 10000,
+          "memo": "만두 맛있음"
+        },
+        {
+          "method": "cash",
+          "category": "food",
+          "title": "시홍쓰 지출",
+          "amount": 9000,
+          "memo": "불맛 맛있음"
+        },
+        {
+          "method": "",
+          "category": "",
+          "title": "",
+          "amount": 654354,
+          "memo": "",
+          "place": ""
+        }
+      ],
+      "income": [
+        {
+          "category": "salary",
+          "title": "월급",
+          "amount": 5000000,
+          "memo": "행복한 월급날"
+        },
+        {
+          "category": "interest",
+          "title": "은행 이자",
+          "amount": 1000,
+          "memo": "티끌 모아 태산"
+        },
+        {
+          "category": "",
+          "title": "",
+          "amount": 324523,
+          "memo": ""
+        }
+      ],
+      "id": "a3db"
+    },
+    {
+      "id": "4bc4",
+      "date": "2024-06-14",
+      "spending_total": 2170560,
+      "income_total": 465964,
+      "spending": [
+        {
+          "method": "",
+          "category": "",
+          "title": "",
+          "amount": 23434,
+          "memo": "fsdaf",
+          "place": ""
+        },
+        {
+          "method": "",
+          "category": "",
+          "title": "",
+          "amount": 1231,
+          "memo": "",
+          "place": ""
+        },
+        {
+          "method": "",
+          "category": "",
+          "title": "",
+          "amount": 2131231,
+          "memo": "",
+          "place": ""
+        },
+        {
+          "method": "",
+          "category": "",
+          "title": "",
+          "amount": 1123,
+          "memo": "",
+          "place": ""
+        },
+        {
+          "method": "",
+          "category": "",
+          "title": "",
+          "amount": 1231,
+          "memo": "",
+          "place": ""
+        },
+        {
+          "method": "",
+          "category": "",
+          "title": "",
+          "amount": 12310,
+          "memo": "",
+          "place": ""
+        }
+      ],
+      "income": [
+        {
+          "category": "",
+          "title": "adsfads",
+          "amount": 12312,
+          "memo": "dgadsgf"
+        },
+        {
+          "category": "",
+          "title": "",
+          "amount": 1231,
+          "memo": ""
+        },
+        {
+          "category": "",
+          "title": "",
+          "amount": 452421,
+          "memo": ""
+        }
+      ]
+    }
+  ]
+}
