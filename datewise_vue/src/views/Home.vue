@@ -100,26 +100,13 @@ import SimpleBookingCard from "@/views/pages/components/SimpleBookingCard.vue";
 import { storeToRefs } from 'pinia';
 import { useKakaoStore } from '@/store/kakaoStore.js'
 import { onMounted } from 'vue';
-import { deleteSingleData } from '@/views/applications/DataApi.js'
 
 const KakaoStore = useKakaoStore();
 const { recommendList } = storeToRefs(KakaoStore);
 
-const deleteData = async (id) => {
-    try {
-      const tmp = await deleteSingleData(id);
-      console.log(tmp);
-    } catch (error) {
-      console.error('Failed to update data:', error);
-    }
-}
-
 onMounted(() => {
   KakaoStore.setSize(3);
   KakaoStore.recommend();
-  // KakaoStore.setKeyword("마라");
-  // KakaoStore.search()
-  deleteData("8304");
 });
 
 

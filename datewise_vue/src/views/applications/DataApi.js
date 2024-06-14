@@ -3,9 +3,9 @@ import axios from 'axios'
 const API_URL = 'http://localhost:3000/data';
 
 // 객체 하나만 받기 - id : get http://localhost:3000/data/{id}
-export const getSingleData = async (id) => {
+export const getSingleData = async (date) => {
     try {
-        const response = await axios.get(API_URL+ `/${id}`);
+        const response = await axios.get(API_URL+ `?date=${date}`);
         
         if (response.status == 200) {
           return response.data;
@@ -15,10 +15,10 @@ export const getSingleData = async (id) => {
     }
 };
 
-// 리스트 전체 불러오기 - id : get http://localhost:3000/data
+// 리스트 전체 불러오기 - get http://localhost:3000/data
 export const getAllData = async () => {
     try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get('/api');
         
         if (response.status == 200) {
           return response.data;
