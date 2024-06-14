@@ -41,9 +41,9 @@
                     <div class="filter-group" v-if="filters.type === 'Spending'">
                         <label class="label_txt">Payment method :</label>
                         <div class="checkbox-group">
-                            <input type="checkbox" id="debit" value="card" v-model="filters.method">
+                            <input type="checkbox" id="debit" value="Card" v-model="filters.method">
                             <label for="debit">Card</label>
-                            <input type="checkbox" id="cash" value="cash" v-model="filters.method">
+                            <input type="checkbox" id="cash" value="Cash" v-model="filters.method">
                             <label for="cash">Cash</label>
                         </div>
                     </div>
@@ -51,34 +51,34 @@
                     <div class="filter-group" v-if="filters.type === 'Spending'">
                         <label class="label_txt">Category :</label>
                         <div class="checkbox-group">
-                            <input type="checkbox" id="food" value="food" v-model="filters.category">
+                            <input type="checkbox" id="food" value="Food" v-model="filters.category">
                             <label for="food">Food</label>
-                            <input type="checkbox" id="vehicle" value="vehicle" v-model="filters.category">
+                            <input type="checkbox" id="vehicle" value="Vehicle" v-model="filters.category">
                             <label for="vehicle">Vehicle</label>
-                            <input type="checkbox" id="traffic" value="traffic" v-model="filters.category">
+                            <input type="checkbox" id="traffic" value="Traffic" v-model="filters.category">
                             <label for="traffic">Traffic</label>
-                            <input type="checkbox" id="shopping" value="shopping" v-model="filters.category">
+                            <input type="checkbox" id="shopping" value="Shopping" v-model="filters.category">
                             <label for="shopping">Shopping</label>
-                            <input type="checkbox" id="medical" value="medical" v-model="filters.category">
+                            <input type="checkbox" id="medical" value="Medical" v-model="filters.category">
                             <label for="medical">Medical</label>
-                            <input type="checkbox" id="utility-bill" value="utility-bill" v-model="filters.category">
+                            <input type="checkbox" id="utility-bill" value="Utility Bill" v-model="filters.category">
                             <label for="utility-bill">Utility Bill</label>
-                            <input type="checkbox" id="insurance" value="insurance" v-model="filters.category">
+                            <input type="checkbox" id="insurance" value="Insurance" v-model="filters.category">
                             <label for="insurance">Insurance</label>
-                            <input type="checkbox" id="beauty" value="beauty" v-model="filters.category">
+                            <input type="checkbox" id="beauty" value="Beauty" v-model="filters.category">
                             <label for="beauty">Beauty</label>
-                            <input type="checkbox" id="saving" value="saving" v-model="filters.category">
+                            <input type="checkbox" id="saving" value="Saving" v-model="filters.category">
                             <label for="saving">Saving</label>
-                            <input type="checkbox" id="education" value="education" v-model="filters.category">
+                            <input type="checkbox" id="education" value="Education" v-model="filters.category">
                             <label for="education">Education</label>
-                            <input type="checkbox" id="donation" value="donation" v-model="filters.category">
+                            <input type="checkbox" id="donation" value="Donation" v-model="filters.category">
                             <label for="donation">Donation</label>
-                            <input type="checkbox" id="pet" value="pet" v-model="filters.category">
+                            <input type="checkbox" id="pet" value="Pet" v-model="filters.category">
                             <label for="pet">Pet</label>
                             <input type="checkbox" id="Congratulation-and-condolences"
-                                value="Congratulation-and-condolences" v-model="filters.category">
+                                value="Congratulation and Condolences" v-model="filters.category">
                             <label for="Congratulation-and-condolences">Congratulation and Condolences</label>
-                            <input type="checkbox" id="subscription" value="subscription" v-model="filters.category">
+                            <input type="checkbox" id="subscription" value="Subscription" v-model="filters.category">
                             <label for="subscription">Subscription</label>
                         </div>
                     </div>
@@ -86,31 +86,31 @@
                     <div class="filter-group" v-if="filters.type === 'Income'">
                         <label class="label_txt">Category :</label>
                         <div class="checkbox-group">
-                            <input type="checkbox" id="salary" value="salary" v-model="filters.category">
+                            <input type="checkbox" id="salary" value="Salary" v-model="filters.category">
                             <label for="salary">Salary</label>
-                            <input type="checkbox" id="part-time-job" value="part-time-job" v-model="filters.category">
+                            <input type="checkbox" id="part-time-job" value="Part Time Job" v-model="filters.category">
                             <label for="part-time-job">Part Time Job</label>
-                            <input type="checkbox" id="bonus" value="bonus" v-model="filters.category">
+                            <input type="checkbox" id="bonus" value="Bonus" v-model="filters.category">
                             <label for="bonus">Bonus</label>
-                            <input type="checkbox" id="pocket-money" value="pocket-money" v-model="filters.category">
+                            <input type="checkbox" id="pocket-money" value="Pocket Money" v-model="filters.category">
                             <label for="pocket-money">Pocket Money</label>
-                            <input type="checkbox" id="financial-income" value="financial-income"
+                            <input type="checkbox" id="financial-income" value="Financial Income"
                                 v-model="filters.category">
                             <label for="financial-income">Financial Income</label>
-                            <input type="checkbox" id="scholarship" value="scholarship" v-model="filters.category">
+                            <input type="checkbox" id="scholarship" value="Scholarship" v-model="filters.category">
                             <label for="scholarship">Scholarship</label>
-                            <input type="checkbox" id="sns" value="sns" v-model="filters.category">
+                            <input type="checkbox" id="sns" value="SNS" v-model="filters.category">
                             <label for="sns">SNS</label>
-                            <input type="checkbox" id="app-tech" value="app-tech" v-model="filters.category">
+                            <input type="checkbox" id="app-tech" value="App Tech" v-model="filters.category">
                             <label for="app-tech">App Tech</label>
-                            <input type="checkbox" id="dutch" value="dutch" v-model="filters.category">
+                            <input type="checkbox" id="dutch" value="Dutch" v-model="filters.category">
                             <label for="dutch">Dutch</label>
-                            <input type="checkbox" id="other-income" value="other-income" v-model="filters.category">
+                            <input type="checkbox" id="other-income" value="Other Income" v-model="filters.category">
                             <label for="other-income">Other Income</label>
-                            <input type="checkbox" id="secondhand-transaction" value="secondhand-transaction"
+                            <input type="checkbox" id="secondhand-transaction" value="Secondhand Transaction"
                                 v-model="filters.category">
                             <label for="secondhand-transaction">Secondhand Transaction</label>
-                            <input type="checkbox" id="insurance-money" value="insurance-money"
+                            <input type="checkbox" id="insurance-money" value="Insurance Money"
                                 v-model="filters.category">
                             <label for="insurance-money">Insurance Money</label>
                         </div>
@@ -148,7 +148,7 @@ const filters = ref({
     endDate: todayString,
     type: 'Spending',
     method: [],
-    category: []
+    category: [],
 });
 
 const json = ref([]);
@@ -158,32 +158,42 @@ const filteredData = ref([]);
 const filterData = () => {
     console.log("Selected Filters:", filters.value);
 
-    if (!json.value) {
-        console.log("No json.value");
+    if (!json.value || json.value.length === 0) {
+        console.log("No existing data to filter.");
         return;
     }
+
     const data = json.value.flatMap(item => {
         if (filters.value.type === 'Spending') {
-            console.log("Spending value filtering");
+            console.log("Spending value filtering for date:", item.date);
             return item.spending.filter(spend => {
                 const methodCheck = filters.value.method.length === 0 || filters.value.method.includes(spend.method);
                 const categoryCheck = filters.value.category.length === 0 || filters.value.category.includes(spend.category);
                 const dateCheck = new Date(item.date) >= new Date(filters.value.startDate) &&
                     new Date(item.date) <= new Date(filters.value.endDate);
+                console.log("result : ", methodCheck, categoryCheck, dateCheck);
                 return methodCheck && categoryCheck && dateCheck;
-            });
+            }).map(spend => ({
+                ...spend,
+                date: item.date // 각 항목에 원본 날짜를 추가
+            }));
         } else if (filters.value.type === 'Income') {
+            console.log("Income value filtering for date:", item.date);
             return item.income.filter(inc => {
                 const categoryCheck = filters.value.category.length === 0 || filters.value.category.includes(inc.category);
                 const dateCheck = new Date(item.date) >= new Date(filters.value.startDate) &&
                     new Date(item.date) <= new Date(filters.value.endDate);
                 return categoryCheck && dateCheck;
-            });
+            }).map(inc => ({
+                ...inc,
+                date: item.date // 각 항목에 원본 날짜를 추가
+            }));
         } else {
             return [];
         }
     });
 
+    console.log('Filtered data:', data);
     filteredData.value = data;
 };
 
@@ -193,11 +203,13 @@ onMounted(async () => {
         const response = await axios.get('http://localhost:3000/data');
         json.value = response.data;
         console.log('Fetched data:', json.value);
+        filterData(); // 데이터 로드 후 필터링 함수 호출
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 });
 </script>
+
 
 
 <style scoped>
