@@ -11,8 +11,8 @@
               <!-- 초록 <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 me-3 float-start"> -->
               <i class="material-icons opacity-10">donut_small</i>
             </div>
-            <h4 class="mb-0">Pie chart</h4>
-            <p class="mb-0 text-sm">Spending vs Income</p>
+            <h4 class="mb-0">Spending VS Income</h4>
+            <p class="mb-0 text-sm">Which do you have more expenses or income this month?</p>
           </div>
           <div class="p-3 card-body">
             <pie-chart
@@ -40,8 +40,8 @@
             </div>
             <div class="d-block d-md-flex">
               <div class="me-auto">
-                <h4 class="mb-0">Line chart</h4>
-                <p class="mb-0 text-sm">Monthly Spending Graph</p>
+                <h4 class="mb-0">Monthly Spending Graph</h4>
+                <p class="mb-0 text-sm">Which month had the most spending?</p>
               </div>
             </div>
           </div>
@@ -75,15 +75,15 @@
         </div>
       </div>
     </div>
-
+    
     <!-- bar chart -->
     <div class="card z-index-2 mt-4">
       <div class="card-header p-3 pt-2">
         <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">
           <i class="material-icons opacity-10">splitscreen</i>
         </div>
-        <h4 class="mb-0">Bar chart</h4>
-        <p class="mb-0 text-sm">Sales related to age average</p>
+        <h4 class="mb-0">Spending by Category</h4>
+        <p class="mb-0 text-sm">Which categories spend the most?</p>
       </div>
       <div class="p-3 card-body">
         <bar-chart-horizontal
