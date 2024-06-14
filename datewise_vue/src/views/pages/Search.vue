@@ -101,8 +101,8 @@
                             <label for="scholarship">Scholarship</label>
                             <input type="checkbox" id="sns" value="sns" v-model="filters.category">
                             <label for="sns">SNS</label>
-                            <input type="checkbox" id="apptech" value="apptech" v-model="filters.category">
-                            <label for="apptech">App Tech</label>
+                            <input type="checkbox" id="app-tech" value="app-tech" v-model="filters.category">
+                            <label for="app-tech">App Tech</label>
                             <input type="checkbox" id="dutch" value="dutch" v-model="filters.category">
                             <label for="dutch">Dutch</label>
                             <input type="checkbox" id="other-income" value="other-income" v-model="filters.category">
@@ -138,31 +138,33 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Header from '@/components/Header.vue';
 
+// 초기 설정
 const today = new Date();
 const todayString = today.toISOString().split('T')[0];
+
+// 필터, 데이터 변수
 const filters = ref({
     startDate: todayString,
     endDate: todayString,
     type: 'Spending',
-    method: 'Card',
+    method: [],
     category: []
 });
 
 const json = ref([]);
 const filteredData = ref([]);
 
-// 데이터 필터링 함수
+// 데이터 필터링
 const filterData = () => {
     console.log("Selected Filters:", filters.value);
 
     if (!json.value) {
-        console.log("1111111111111111111111");
+        console.log("No json.value");
         return;
     }
-
-
     const data = json.value.flatMap(item => {
         if (filters.value.type === 'Spending') {
+            console.log("Spending value filtering");
             return item.spending.filter(spend => {
                 const methodCheck = filters.value.method.length === 0 || filters.value.method.includes(spend.method);
                 const categoryCheck = filters.value.category.length === 0 || filters.value.category.includes(spend.category);
@@ -185,21 +187,17 @@ const filterData = () => {
     filteredData.value = data;
 };
 
-// 데이터 로드 함수
+// 데이터 로드
 onMounted(async () => {
     try {
-        const response = await axios.get('http://localhost:3000/data'); 
+        const response = await axios.get('http://localhost:3000/data');
         json.value = response.data;
-        console.log(response);
+        console.log('Fetched data:', json.value);
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 });
 </script>
-
-
-
-
 
 
 <style scoped>
@@ -301,4 +299,3 @@ button {
     cursor: pointer;
 }
 </style>
-
