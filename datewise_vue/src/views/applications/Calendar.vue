@@ -687,7 +687,7 @@ const saveSpendingEvent = async () => {
     const response = await getSingleData(addSpendingData.value.date);
 
     // 기존에 값이 있는 경우
-    let object = response[0];
+    let object = response;
 
     let pushObject = {
       "method": addSpendingData.value.method,
@@ -750,7 +750,7 @@ const saveIncomeEvent = async () => {
     const response = await getSingleData(addIncomeData.value.date);
 
     // 기존에 값이 있는 경우
-    let object = response[0];
+    let object = response;
     let pushObject = {
       "category": addIncomeData.value.category,
       "title": addIncomeData.value.title,
