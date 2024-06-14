@@ -137,6 +137,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Header from '@/components/Header.vue';
+import DataTables from '../applications//DataTables.vue'
 
 // 초기 설정
 const today = new Date();
@@ -171,11 +172,11 @@ const filterData = () => {
                 const categoryCheck = filters.value.category.length === 0 || filters.value.category.includes(spend.category);
                 const dateCheck = new Date(item.date) >= new Date(filters.value.startDate) &&
                     new Date(item.date) <= new Date(filters.value.endDate);
-                console.log("result : ", methodCheck, categoryCheck, dateCheck);
+                console.log("Spending result : ", methodCheck, categoryCheck, dateCheck);
                 return methodCheck && categoryCheck && dateCheck;
             }).map(spend => ({
                 ...spend,
-                date: item.date // 각 항목에 원본 날짜를 추가
+                date: item.date 
             }));
         } else if (filters.value.type === 'Income') {
             console.log("Income value filtering for date:", item.date);
@@ -183,10 +184,11 @@ const filterData = () => {
                 const categoryCheck = filters.value.category.length === 0 || filters.value.category.includes(inc.category);
                 const dateCheck = new Date(item.date) >= new Date(filters.value.startDate) &&
                     new Date(item.date) <= new Date(filters.value.endDate);
+                console.log("Income result : ", categoryCheck, dateCheck);
                 return categoryCheck && dateCheck;
             }).map(inc => ({
                 ...inc,
-                date: item.date // 각 항목에 원본 날짜를 추가
+                date: item.date 
             }));
         } else {
             return [];
@@ -195,6 +197,7 @@ const filterData = () => {
 
     console.log('Filtered data:', data);
     filteredData.value = data;
+    console.log('posting to dataTable data:', filteredData);
 };
 
 // 데이터 로드

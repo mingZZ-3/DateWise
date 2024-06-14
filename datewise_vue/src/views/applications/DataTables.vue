@@ -14,6 +14,9 @@
           <td id="title">{{ item.title }}</td>
           <td id="amount">{{ item.amount }}원</td>
         </tr>
+        <tr v-if="data.length === 0">
+          <td colspan="3" class="text-center">No data available</td>
+        </tr>
       </tbody>
     </table>
   </div>
