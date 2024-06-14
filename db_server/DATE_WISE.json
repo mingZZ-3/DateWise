@@ -2,8 +2,8 @@
   "data": [
     {
       "date": "2024-06-12",
-      "spending_total" : 2000,
-      "income_total" : 100000,
+      "spending_total": 2000,
+      "income_total": 100000,
       "spending": [
         {
           "method": "Card",
@@ -33,13 +33,13 @@
           "amount": 1000,
           "memo": "티끌 모아 태산"
         }
-      ]
+      ],
+      "id": "a3db"
     },
-
     {
       "date": "2024-06-13",
-      "spending_total" : 25000,
-      "income_total" : 200000,
+      "spending_total": 25000,
+      "income_total": 200000,
       "spending": [
         {
           "method": "Card",
@@ -69,8 +69,8 @@
           "amount": 1000,
           "memo": "티끌 모아 태산"
         }
-      ]
-
+      ],
+      "id": "3706"
     }
   ]
 }

@@ -672,7 +672,6 @@ const next = () => {
 
 const saveSpendingEvent = async () => {
   const findId = "S" + addSpendingData.value.date;
-  let event = calendar.getEventById(findId);
 
   try {
     const response = await getSingleData(addSpendingData.value.date);
@@ -694,7 +693,9 @@ const saveSpendingEvent = async () => {
 
     try{
       await updateSingleData(object);
-      event.setProp('title', -object.spending_total);
+      calendar.removeAllEvents();
+      initEvents();
+      
     } catch(error){
       console.log(error);
     }
@@ -734,7 +735,6 @@ const saveSpendingEvent = async () => {
 
 const saveIncomeEvent = async () => {
   const findId = "I" + addIncomeData.value.date;
-  let event = calendar.getEventById(findId);
 
   try {
     const response = await getSingleData(addIncomeData.value.date);
@@ -753,7 +753,9 @@ const saveIncomeEvent = async () => {
 
     try {
       await updateSingleData(object);
-      event.setProp('title', "+" + object.income_total);
+      calendar.removeAllEvents();
+      initEvents();
+
     } catch (error) {
       console.log(error);
     }
@@ -778,7 +780,7 @@ const saveIncomeEvent = async () => {
     await postSingleData(object);
 
     model.id = findId;
-    model.title = object.income_total;
+    model.title = "+" + object.income_total;
     model.start = object.date;
     model.backgroundColor = "";
 
