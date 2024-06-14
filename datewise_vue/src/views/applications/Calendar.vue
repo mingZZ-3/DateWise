@@ -104,11 +104,6 @@
 
       <div class="form-group">
         <label for="method" class="form-label">Payment Method</label>
-        <select
-          id="method"
-          class="form-control"
-          v-model="addSpendingData.paymentMethod"
-        >
         <select id="method" class="form-control" v-model="addSpendingData.method">
           <option disabled value="">Choose payment method</option>
           <option>Card</option>
@@ -596,8 +591,8 @@ const initEvents = async () => {
   try {
     const response = await axios.get('http://localhost:3000/data');
 
-    for (let event of response.data) {
-      const date = event.date;
+    for (let object of response.data) {
+      const date = object.date;
 
       if(object.spending_total != 0){
         model.id = "S" + date;
@@ -677,7 +672,6 @@ const next = () => {
 
 const saveSpendingEvent = async () => {
   const findId = "S" + addSpendingData.value.date;
-  let event = calendar.getEventById(findId);
 
   try {
     const response = await getSingleData(addSpendingData.value.date);
@@ -699,7 +693,9 @@ const saveSpendingEvent = async () => {
 
     try{
       await updateSingleData(object);
-      event.setProp('title', -object.spending_total);
+      calendar.removeAllEvents();
+      initEvents();
+      
     } catch(error){
       console.log(error);
     }
@@ -739,7 +735,6 @@ const saveSpendingEvent = async () => {
 
 const saveIncomeEvent = async () => {
   const findId = "I" + addIncomeData.value.date;
-  let event = calendar.getEventById(findId);
 
   try {
     const response = await getSingleData(addIncomeData.value.date);
@@ -758,7 +753,9 @@ const saveIncomeEvent = async () => {
 
     try {
       await updateSingleData(object);
-      event.setProp('title', "+" + object.income_total);
+      calendar.removeAllEvents();
+      initEvents();
+
     } catch (error) {
       console.log(error);
     }
@@ -783,7 +780,7 @@ const saveIncomeEvent = async () => {
     await postSingleData(object);
 
     model.id = findId;
-    model.title = object.income_total;
+    model.title = "+" + object.income_total;
     model.start = object.date;
     model.backgroundColor = "";
 
