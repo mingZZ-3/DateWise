@@ -54,8 +54,8 @@
             </div>
             <div class="d-block d-md-flex">
               <div class="me-auto">
-                <h4 class="mb-0">Line chart</h4>
-                <p class="mb-0 text-sm">Monthly Spending Graph</p>
+                <h4 class="mb-0">Monthly Spending Graph</h4>
+                <p class="mb-0 text-sm">Which month had the most spending?</p>
               </div>
             </div>
           </div>
@@ -76,11 +76,11 @@
                 datasets: [
                   {
                     label: 'last month',
-                    data: [36000, 23000, 8000, 55000, 62000, 15000, 64000],
+                    data: [50000, 120000, 450000, 550000, 520000, 750000, 940000],
                   },
                   {
                     label: 'this month',
-                    data: [50000, 47000, 72000, 11000, 89000, 120000, 35000],
+                    data: [100000, 270000, 320000, 410000, 790000, 1200000, 1500000],
                   },
                 ],
               }"
