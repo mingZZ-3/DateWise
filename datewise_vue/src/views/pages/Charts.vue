@@ -75,7 +75,7 @@
         </div>
       </div>
     </div>
-
+    
     <!-- bar chart -->
     <div class="card z-index-2 mt-4">
       <div class="card-header p-3 pt-2">
