@@ -1,9 +1,14 @@
 <template>
-  <Temp title="Monthly Analytics" type="4"></Temp>
+  <TopHeader title="Monthly Analytics" type="4"></TopHeader>
+
+  <div class="row mt-n4" style="margin-left: 35px; margin-right: 35px;">
+      <MoneyBox class="col" title="Spending" type="0"/>
+      <MoneyBox class="col" title="Income" type="1"/>
+    </div>
 
   <!-- pie chart -->
   <div class="py-4 container-fluid mt-n6">
-    <div class="mt-4 row">
+    <div class="mt-3 row ms-2 me-2">
       <div class="col-lg-6 col-12">
         <div class="card z-index-2 mt-4">
           <div class="card-header p-3 pt-2">
@@ -77,7 +82,7 @@
     </div>
     
     <!-- bar chart -->
-    <div class="card z-index-2 mt-4">
+    <div class="card z-index-2 mt-5 ms-3 me-3">
       <div class="card-header p-3 pt-2">
         <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">
           <i class="material-icons opacity-10">splitscreen</i>
@@ -104,7 +109,8 @@
 import GradientLineChart from "./components/GradientLineChart.vue";
 import BarChartHorizontal from "./components/BarChartHorizontal.vue";
 import PieChart from "./components/PieChart.vue";
-import Temp from "@/components/Header.vue";
+import TopHeader from "@/components/Header.vue";
+import MoneyBox from '@/components/MoneyBox.vue'
 
 export default {
   name: "Charts",
@@ -112,7 +118,8 @@ export default {
     GradientLineChart,
     BarChartHorizontal,
     PieChart,
-    Temp,
+    TopHeader,
+    MoneyBox
   },
 };
 </script>

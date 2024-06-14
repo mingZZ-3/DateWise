@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col">
         <!-- Fullcalendar -->
-        <div class="card card-calendar">
+        <div class="card card-calendar me-5">
           <!-- Card header -->
           <div
             class="card-header d-flex justify-content-center align-items-center"
@@ -485,13 +485,13 @@
 import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { getCurrentInstance } from 'vue';
 
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
 import Modal from "./Modal";
-// import Header from "@/components/Header.vue";
 import { getSingleData } from '@/views/applications/DataApi.js'
 import { postSingleData } from '@/views/applications/DataApi.js'
 import { updateSingleData } from '@/views/applications/DataApi.js'
@@ -548,6 +548,16 @@ let editIncomeData = ref({
 const showAddSpendingModal = ref(false);
 const showAddIncomeModal = ref(false);
 const showEditModal = ref(false);
+
+const internalInstance = getCurrentInstance(); 
+const emitter = internalInstance.appContext.config.globalProperties.emitter;
+
+const itemEditClick = (data, index) => {
+    // 모달 뜨고, 모달에 데이터 바인딩하기
+    alert(data + index);
+};
+
+emitter.on('item_edit_click', itemEditClick);
 
 const closeModal = () => {
   showAddSpendingModal.value = false;
@@ -625,8 +635,8 @@ const initCalendar = () => {
     selectable: true,
     headerToolbar: false,
 
-    select: () => {             // 캘린더에서 특정 날짜를 클릭했을 때
-      
+    select: (info) => {             // 캘린더에서 특정 날짜를 클릭했을 때
+      emitter.emit('day_click', info.startStr);
     },
     eventClick: () => {         // 캘린더의 특정 이벤트를 클릭했을 때
       showEditModal.value = true;

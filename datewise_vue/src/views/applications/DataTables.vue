@@ -9,7 +9,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in data" :key="index">
+        <tr v-for="(item, index) in data" :key="index" @click="emitter.emit('item_edit_click', originalData, index, )">
           <td id="cate">{{ item.category }}</td>
           <td id="title">{{ item.title }}</td>
           <td id="amount">{{ item.amount }}원</td>
@@ -24,6 +24,10 @@ export default {
   name: "DataTables",
   props: {
     data: {
+      type: Array,
+      required: true,
+    },
+    originalData: {
       type: Array,
       required: true,
     },

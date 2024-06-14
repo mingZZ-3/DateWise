@@ -14,7 +14,7 @@
             <img src="@/assets/img/icon_main_boy.jpg" style="width: 125px;">
         </div>
     
-        <div class="mt-n5 mb-2">
+        <div class="mt-n5 mb-2" id="textlayout">
             <h2 style="color: black;">Emily ♥ Ethan</h2>
             <h5 style="color: #827B7D;">Our Beautiful And Wise Story of Month</h5>
         </div>
@@ -35,6 +35,9 @@ h2, h5{
     font-weight: bold;
     font-style: normal;
     letter-spacing: 2px;
-    text-align: center;
+}
+
+#textlayout {
+  text-align: center;
 }
 </style>

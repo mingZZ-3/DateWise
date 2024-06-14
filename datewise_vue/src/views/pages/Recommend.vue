@@ -1,7 +1,6 @@
 <template>
     <div class="mb-4">
-      <Header title="Date Recommend" type="3"/>
-
+      <Header id="title" title="Date Recommend" type="3"/>
 
       <!-- recommend -->
       <div class="mt-n3 ms-5 me-5">
@@ -55,7 +54,7 @@ onMounted(() => {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Orbit&display=swap');
 
-h2, h5 {
+h2, h5, #title {
     font-family: "DM Serif Text", serif;
     font-weight: bold;
     font-style: normal;

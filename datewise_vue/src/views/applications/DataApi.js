@@ -8,7 +8,7 @@ export const getSingleData = async (date) => {
         const response = await axios.get(API_URL+ `?date=${date}`);
         
         if (response.status == 200) {
-          return response.data;
+          return response.data[0];
         }
     } catch(e) {
       console.log("error", e.response.data);
@@ -18,7 +18,7 @@ export const getSingleData = async (date) => {
 // 리스트 전체 불러오기 - get http://localhost:3000/data
 export const getAllData = async () => {
     try {
-        const response = await axios.get('/api');
+        const response = await axios.get(API_URL);
         
         if (response.status == 200) {
           return response.data;

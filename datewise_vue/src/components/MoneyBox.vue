@@ -2,15 +2,16 @@
     <div class="container-fluid pb-5">
         <div class="card card-body">
             <h4>{{ title }}</h4>
-            <div id="moneyFormat" v-show="isSpending"><h1 class="spending">{{ setAmount }}</h1></div>
-            <div id="moneyFormat" v-show="!isSpending"><h1 class="income">{{ setAmount }}</h1></div>
+            <div id="moneyFormat" v-show="isSpending"><h1 class="spending">- {{ spendingPrice.toLocaleString() }}</h1></div>
+            <div id="moneyFormat" v-show="!isSpending"><h1 class="income">+ {{ incomePrice.toLocaleString() }}</h1></div>
         </div> 
     </div>
     
 </template>
 
 <script>
-import {ref, computed} from 'vue';
+import { ref } from 'vue';
+import { getAllData } from '@/views/applications/DataApi.js'
 
 export default {
   name : "headercomponent",
@@ -20,16 +21,21 @@ export default {
   },
   setup(props) {
     const isSpending = ref(true);
+    const spendingPrice = ref(0);
+    const incomePrice = ref(0);
 
-    const setAmount = computed(() => {
-      if (props.type === "0") {    // spending
-        return "- 4000";
-      } else if (props.type === "1") {  // income
-        return "+ 3000";
-      } else {
-        return "0";
+    const getAllDataList = async () => {
+      try {
+        const datalist = await getAllData();
+        for (let i=0;i<datalist.length;i++) {
+          spendingPrice.value += datalist[i].spending_total;
+          incomePrice.value += datalist[i].income_total;
+        }
+      } catch (error) {
+        console.error('Failed to update data:', error);
       }
-    });
+    };
+    
 
     if (props.type === "0") {    // spending
       isSpending.value = true;
@@ -38,10 +44,13 @@ export default {
     } else {
       isSpending.value = true;
     }
+    getAllDataList();
 
     return {
-      isSpending,
-      setAmount
+      spendingPrice,
+      incomePrice,
+      getAllDataList,
+      isSpending
     };
   }
 }
