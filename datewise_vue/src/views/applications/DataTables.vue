@@ -15,7 +15,7 @@
           <tbody>
             <tr v-for="(item, index) in data" :key="index" @click="emitter.emit('item_edit_click', { data, item })">
               <td id="cate">{{ item.category }}</td>
-              <td id="title">{{ item.title }}</td>
+              <td id="title" :class="item.type === 'spending' ? 'spendingtitle' : 'incometitle'">{{ item.title }}</td>
               <td id="amount">{{ item.amount }}원</td>
             </tr>
           </tbody>
@@ -37,6 +37,22 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Orbit&display=swap');
+
+.title {
+  font-family: "Orbit", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.cate, .amount, th {
+    font-family: "DM Serif Text", serif;
+    font-weight: bold;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+
 td, h2, h4{
   padding: 20px;
   font-family: "DM Serif Display", serif;
@@ -55,8 +71,12 @@ td, h2, h4{
   font-size: 15px;
 }
 
-#title {
+.spendingtitle {
   color: #994E60;
+  font-size: 20px;
+}
+.incometitle {
+  color: #133862;
   font-size: 20px;
 }
 

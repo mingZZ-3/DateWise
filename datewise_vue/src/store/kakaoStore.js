@@ -10,12 +10,16 @@ export const useKakaoStore = defineStore('kakao', () => {
     const size = ref(3);
     const keyword = ref('');
     const recommendList = ref([]);
-    const searchList = ref([]);
+    const kakaoSearchList = ref([]);
   
     const setSearchData = (newCode, newX, newY) => {
         category_group_code.value = newCode;
         x.value = newX;
         y.value = newY;
+        console.log('code', category_group_code.value);
+        console.log('x', x.value);
+        console.log('y', y.value);
+
     };
 
     const setSize = (newSize) => {
@@ -24,10 +28,19 @@ export const useKakaoStore = defineStore('kakao', () => {
 
     const setKeyword = (newKeyword) => {
       keyword.value = newKeyword;
+      console.log('keyword', keyword);
     };
+
+    const setSearchList = () => {
+      kakaoSearchList.value = [];
+    }
 
     const recommend = async () => {
       try {
+          if (category_group_code.value == "") {
+            category_group_code.value = "CE7"
+          }
+          
           const data = {
             "category_group_code" : category_group_code.value,
             "x": x.value,
@@ -47,7 +60,7 @@ export const useKakaoStore = defineStore('kakao', () => {
             recommendList.value = response.data.documents;  
           }
       } catch(e) {
-        console.log("error", e.response.data);
+        console.log("error", e);
       }
     };
 
@@ -55,6 +68,8 @@ export const useKakaoStore = defineStore('kakao', () => {
       try {
           const data = {
             "query" : keyword.value,
+            "x" : "127.0733985",
+            "y" : "37.5481533",
             "size" : 5
           };
           const response = await axios.get("https://dapi.kakao.com/v2/local/search/keyword.json", {
@@ -67,14 +82,14 @@ export const useKakaoStore = defineStore('kakao', () => {
           );
           
           if (response.status == 200) {
-            searchList.value = response.data.documents;
-            console.log(searchList.value);
+            kakaoSearchList.value = response.data.documents;
+            console.log("kaka_search", kakaoSearchList.value);
           }
       } catch(e) {
-        console.log("error", e.response.data);
+        console.log("error", e);
       }
     };
 
-    return { category_group_code, x, y, recommendList, recommend, setSearchData, setSize, setKeyword, search };
+    return { category_group_code, x, y, kakaoSearchList, recommendList,  recommend, setSearchData, setSize, setKeyword, search, setSearchList };
   }
 );

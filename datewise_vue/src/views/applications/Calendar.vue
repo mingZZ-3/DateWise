@@ -118,7 +118,16 @@
           id="place"
           class="form-control"
           v-model="addSpendingData.place"
+          @input="handleKakaoSearch(addSpendingData.place)"
         />
+        <ul
+          v-if="kakaoSearchList && kakaoSearchList.length > 0"
+          ref="searchList"
+        >
+          <li v-for="item in kakaoSearchList" :key="item.id" @click="selectPlaceFormKakao(item)">
+            {{ item.place_name }}
+          </li>
+        </ul>
       </div>
 
       <div class="form-group">
@@ -168,7 +177,8 @@
       </template>
     </modal>
 
-    <modal v-model:show="showAddIncomeModal" modal-classes="modal-secondary">
+    <modal v-model:show="showAddIncomeModal" 
+    modal-classes="modal-secondary">
       <div class="form-group">
         <label for="date" class="form-label">Date</label>
         <input
@@ -249,7 +259,7 @@
       </template>
     </modal>
 
-    <modal v-model:show="showEditModal" modal-classes="modal-secondary">
+    <modal v-model:show="showSpendingEditModal" modal-classes="modal-secondary">
       <form class="edit-event--form" @submit.prevent="editSpendingEvent">
         <div class="form-group">
           <label for="date" class="form-label">Date</label>
@@ -291,7 +301,7 @@
           <select
             id="method"
             class="form-control"
-            v-model="editSpendingData.paymentMethod"
+            v-model="editSpendingData.method"
           >
             <option disabled value="">Choose payment method</option>
             <option>Card</option>
@@ -306,7 +316,16 @@
             id="place"
             class="form-control"
             v-model="editSpendingData.place"
+            @input="handleKakaoSearch(editSpendingData.place)"
           />
+          <ul
+            v-if="kakaoSearchList && kakaoSearchList.length > 0"
+            ref="searchList"
+          >
+            <li v-for="item in kakaoSearchList" :key="item.id" @click="selectPlaceFormKakao_edit(item)">
+              {{ item.place_name }}
+            </li>
+          </ul>
         </div>
 
         <div class="form-group">
@@ -364,7 +383,7 @@
       </template>
     </modal>
 
-    <modal v-model:show="showEditModal" modal-classes="modal-secondary">
+    <modal v-model:show="showIncomeEditModal" modal-classes="modal-secondary">
       <form class="edit-event--form" @submit.prevent="editIncomeEvent">
         <div class="form-group">
           <label for="date" class="form-label">Date</label>
@@ -384,44 +403,19 @@
             v-model="editIncomeData.category"
           >
             <option disabled value="">Choose category</option>
-            <option>Food</option>
-            <option>Vehicle</option>
-            <option>Traffic</option>
-            <option>Shopping</option>
-            <option>Medical</option>
-            <option>Utility bill</option>
-            <option>Insurance</option>
-            <option>Beauty</option>
-            <option>Saving</option>
-            <option>Education</option>
-            <option>Donation</option>
-            <option>Pet</option>
-            <option>Congratulations and Condolences</option>
-            <option>Subscription</option>
+            <option>Salary</option>
+            <option>Bonus</option>
+            <option>Part Time Job</option>
+            <option>Pocket Money</option>
+            <option>Financial Income</option>
+            <option>Insurance Money</option>
+            <option>Scholarship</option>
+            <option>Secondhand Transaction</option>
+            <option>SNS</option>
+            <option>Apptech</option>
+            <option>Dutch</option>
+            <option>Other Income</option>
           </select>
-        </div>
-
-        <div class="form-group">
-          <label for="method" class="form-label">Payment Method</label>
-          <select
-            id="method"
-            class="form-control"
-            v-model="editIncomeData.paymentMethod"
-          >
-            <option disabled value="">Choose payment method</option>
-            <option>Card</option>
-            <option>Cash</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="place" class="form-label">Place</label>
-          <input
-            type="text"
-            id="place"
-            class="form-control"
-            v-model="editIncomeData.place"
-          />
         </div>
 
         <div class="form-group">
@@ -487,6 +481,9 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { getCurrentInstance } from 'vue';
 
+import { useKakaoStore } from '@/store/kakaoStore.js'
+import { storeToRefs } from 'pinia';
+
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
@@ -495,6 +492,10 @@ import Modal from "./Modal";
 import { getSingleData } from '@/views/applications/DataApi.js'
 import { postSingleData } from '@/views/applications/DataApi.js'
 import { updateSingleData } from '@/views/applications/DataApi.js'
+
+const KakaoStore = useKakaoStore();
+const { kakaoSearchList } = storeToRefs(KakaoStore);
+let timeoutId = null;
 
 let calendar;
 const router = useRouter();
@@ -547,7 +548,8 @@ let editIncomeData = ref({
 
 const showAddSpendingModal = ref(false);
 const showAddIncomeModal = ref(false);
-const showEditModal = ref(false);
+const showSpendingEditModal = ref(false);
+const showIncomeEditModal = ref(false);
 
 const internalInstance = getCurrentInstance(); 
 const emitter = internalInstance.appContext.config.globalProperties.emitter;
@@ -558,7 +560,12 @@ const itemEditClick = (obj) => {
     console.log(obj.data);
     console.log("item");
     console.log(obj.item);
-    // editIncomeData
+    KakaoStore.setSearchList();
+    if (obj.item.type === "spending") {
+      openEditSpendingModal(obj.item);
+    } else {
+      openEditIncomeModal(obj.item);
+    }
 };
 
 emitter.on('item_edit_click', itemEditClick);
@@ -566,7 +573,8 @@ emitter.on('item_edit_click', itemEditClick);
 const closeModal = () => {
   showAddSpendingModal.value = false;
   showAddIncomeModal.value = false;
-  showEditModal.value = false;
+  showSpendingEditModal.value = false;
+  showIncomeEditModal.value = false;
 };
 
 const getCurrentDate = () => {
@@ -586,6 +594,7 @@ const openAddSpendingModal = () => {
   addSpendingData.value.title = "";
   addSpendingData.value.amount = 0;
   addSpendingData.value.memo = "";
+  KakaoStore.setSearchList();
 
   showAddSpendingModal.value = true;
 };
@@ -600,6 +609,30 @@ const openAddIncomeModal = () => {
 
   showAddIncomeModal.value = true;
 };
+
+const openEditSpendingModal = (obj) => {
+  editSpendingData.value.date = obj.date;
+  editSpendingData.value.method = obj.method;
+  editSpendingData.value.category = obj.category;
+  editSpendingData.value.place = obj.place;
+  editSpendingData.value.title = obj.title;
+  editSpendingData.value.amount = obj.amount;
+  editSpendingData.value.memo = obj.memo;
+  KakaoStore.setSearchList();
+
+  showSpendingEditModal.value = true;
+};
+
+const openEditIncomeModal = (obj) => {
+  editIncomeData.value.date = obj.date;
+  editIncomeData.value.category = obj.category
+  editIncomeData.value.title = obj.title;
+  editIncomeData.value.amount = obj.amount;
+  editIncomeData.value.memo = obj.memo;
+
+  showIncomeEditModal.value = true;
+};
+
 
 const initEvents = async () => {
   try {
@@ -643,7 +676,7 @@ const initCalendar = () => {
       emitter.emit('day_click', info.startStr);
     },
     eventClick: () => {         // 캘린더의 특정 이벤트를 클릭했을 때
-      showEditModal.value = true;
+
     },
     events: [],
   });
@@ -695,6 +728,35 @@ const next = () => {
   getCurrentMonthYear();
 };
 
+const search_kakao_place = (keyword) => {
+  // 카카오 검색
+  KakaoStore.setKeyword(keyword);
+  KakaoStore.search();
+};
+
+const handleKakaoSearch = (keyword) => {
+  // 검색 지연
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(() => {
+    search_kakao_place(keyword);
+    console.log("검색 지연");
+  }, 500);
+};
+
+const selectPlaceFormKakao = (item) => {
+  // 선택한 결과 기반으로 추천 검색값 반영
+  KakaoStore.setSearchData(item.category_group_code, item.x, item.y);
+  KakaoStore.setSearchList();
+  addSpendingData.value.place = item.place_name;
+};
+
+const selectPlaceFormKakao_edit = (item) => {
+  // 선택한 결과 기반으로 추천 검색값 반영
+  KakaoStore.setSearchData(item.category_group_code, item.x, item.y);
+  KakaoStore.setSearchList();
+  editSpendingData.value.place = item.place_name;
+};
+
 const saveSpendingEvent = async () => {
   const findId = "S" + addSpendingData.value.date;
 
@@ -720,7 +782,7 @@ const saveSpendingEvent = async () => {
       await updateSingleData(object);
       calendar.removeAllEvents();
       initEvents();
-      
+      emitter.emit('day_click', addSpendingData.value.date);
     } catch(error){
       console.log(error);
     }
@@ -780,7 +842,7 @@ const saveIncomeEvent = async () => {
       await updateSingleData(object);
       calendar.removeAllEvents();
       initEvents();
-
+      emitter.emit('day_click', addIncomeData.value.date);
     } catch (error) {
       console.log(error);
     }
@@ -815,59 +877,26 @@ const saveIncomeEvent = async () => {
   showAddIncomeModal.value = false;
 };
 
-const editSpendingEvent = (eventId, prevAmount, newAmount, newDate) => {
-  // S2024-06-13", 1000, 2000, "2024-06-14"
-  let event = calendar.getEventById(eventId);
+const editSpendingEvent = () => {
+  try {
 
-  if (event) {
-    const existAmount = event.title;
-    const gapAmount = newAmount - prevAmount;
-
-    let finalAmount;
-    if (eventId[0] == "S") {
-      finalAmount = Number(existAmount) - gapAmount;
-      event.setProp("title", finalAmount);
-    } else if (eventId[0] == "I") {
-      finalAmount = Number(existAmount) + gapAmount;
-      event.setProp("title", "+" + finalAmount);
-    }
-
-    event.setStart(newDate);
-    event.setAllDay(true);
-  } else {
-    console.error(`Event with id ${eventId} not found`);
-    alert("error");
+    emitter.emit('day_click', editSpendingData.value.date);
+  } catch (e) {
+    console.log('Edit_spending', e);
   }
 
-  showEditModal.value = false;
+  showSpendingEditModal.value = false;
 };
 
-const editIncomeEvent = (eventId, prevAmount, newAmount, newDate) => {
-  // I2024-06-13", 1000, 2000, "2024-06-14"
+const editIncomeEvent = () => {
+  try {
 
-  let event = calendar.getEventById(eventId);
-
-  if (event) {
-    const existAmount = event.title;
-    const gapAmount = newAmount - prevAmount;
-
-    let finalAmount;
-    if (eventId[0] == "S") {
-      finalAmount = Number(existAmount) - gapAmount;
-      event.setProp("title", finalAmount);
-    } else if (eventId[0] == "I") {
-      finalAmount = Number(existAmount) + gapAmount;
-      event.setProp("title", "+" + finalAmount);
-    }
-
-    event.setStart(newDate);
-    event.setAllDay(true);
-  } else {
-    console.error(`Event with id ${eventId} not found`);
-    alert("error");
+    emitter.emit('day_click', editIncomeData.value.date);
+  } catch (e) {
+    console.log('Edit_income', e);
   }
 
-  showEditModal.value = false;
+  showIncomeEditModal.value = false;
 };
 
 const deleteSpendingEvent = () => {
@@ -876,7 +905,7 @@ const deleteSpendingEvent = () => {
 
   if (event) {
     event.remove();
-    showEditModal.value = false;
+    showSpendingEditModal.value = false;
   } else {
     alert("Event not found.");
   }
@@ -888,7 +917,7 @@ const deleteIncomeEvent = () => {
 
   if (event) {
     event.remove();
-    showEditModal.value = false;
+    showIncomeEditModal.value = false;
   } else {
     alert("Event not found.");
   }
@@ -906,6 +935,34 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Orbit&display=swap');
+
+li, #title, #place, #memo {
+  font-family: "Orbit", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.cate, .amount, th {
+    font-family: "DM Serif Text", serif;
+    font-weight: bold;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+
+li {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+ul {
+  display: block; 
+  list-style-type: none;
+  list-style: none; 
+  margin-top: 0px;
+  border: #ddd 1px solid;
+  border-radius: 5px;
+}
 img {
   box-decoration-break: none;
   display: block;

@@ -20,6 +20,9 @@
                 <h4 class="mb-0">For Date</h4>
                 <p class="mb-0 text-sm">we recommend places based on what you visited recently</p>
               </div>
+              <router-link to="/pages/recommend">
+                <div class="ms-auto mt-5 me-4" style="text-align: end; font-size: large;">more ></div>
+            </router-link>
             </div>
           </div>
           <div class="p-3 card-body">
@@ -57,6 +60,9 @@
                 <h4 class="mb-0">Monthly Spending Graph</h4>
                 <p class="mb-0 text-sm">Which month had the most spending?</p>
               </div>
+              <router-link to="/pages/charts">
+                <div class="ms-auto mt-5 me-4" style="text-align: end; font-size: large;">more ></div>
+              </router-link>
             </div>
           </div>
           <div class="p-3 card-body">

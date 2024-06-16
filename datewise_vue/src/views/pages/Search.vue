@@ -176,6 +176,7 @@ const filterData = () => {
                 return methodCheck && categoryCheck && dateCheck;
             }).map(spend => ({
                 ...spend,
+                type : "spending",
                 date: item.date 
             }));
         } else if (filters.value.type === 'Income') {
@@ -188,6 +189,7 @@ const filterData = () => {
                 return categoryCheck && dateCheck;
             }).map(inc => ({
                 ...inc,
+                type : "income",
                 date: item.date 
             }));
         } else {
