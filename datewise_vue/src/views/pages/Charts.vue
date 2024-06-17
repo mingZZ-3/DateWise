@@ -27,7 +27,7 @@
                 labels: ['Spending', 'Income'],
                 datasets: {
                   label: 'Percentage',
-                  data: [40, 30],
+                  data: [ 1200000, 3022000],
                 },
               }"
             />
@@ -105,23 +105,32 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import GradientLineChart from "./components/GradientLineChart.vue";
 import BarChartHorizontal from "./components/BarChartHorizontal.vue";
 import PieChart from "./components/PieChart.vue";
 import TopHeader from "@/components/Header.vue";
-import MoneyBox from '@/components/MoneyBox.vue'
+import MoneyBox from '@/components/MoneyBox.vue';
+import { getAllData } from '@/views/applications/DataApi.js';
+import { ref, onMounted } from 'vue';
 
-export default {
-  name: "Charts",
-  components: {
-    GradientLineChart,
-    BarChartHorizontal,
-    PieChart,
-    TopHeader,
-    MoneyBox
-  },
+const pieData = ref([0,0]);
+
+const getAllDataList = async () => {
+  try {
+    const datalist = await getAllData();
+    datalist.forEach(data => {
+      pieData.value[0] += data.spending_total;
+      pieData.value[1] += data.income_total;
+    });
+  } catch (error) {
+    console.error('Failed to update data:', error);
+  }
 };
+   
+onMounted(() => {
+  getAllDataList();
+});
 </script>
 
 <style>

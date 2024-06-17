@@ -71,6 +71,144 @@
         }
       ],
       "id": "3706"
+    },
+    {
+      "id": "f174",
+      "date": "2024-06-14",
+      "spending_total": 72000,
+      "income_total": 30000000,
+      "spending": [
+        {
+          "method": "Cash",
+          "category": "Traffic",
+          "title": "기후동행카드 충전",
+          "amount": 69000,
+          "memo": "",
+          "place": "사당역 2호선"
+        },
+        {
+          "method": "",
+          "category": "Pet",
+          "title": "츄르츄르 냥",
+          "amount": 3000,
+          "memo": "귀여운 고양이를 위한 츄르 !",
+          "place": "GS25 화양세종점"
+        }
+      ],
+      "income": [
+        {
+          "category": "Salary",
+          "title": "드디어 월급 !",
+          "amount": 30000000,
+          "memo": ""
+        }
+      ]
+    },
+    {
+      "id": "c9a5",
+      "date": "2024-06-16",
+      "spending_total": 0,
+      "income_total": 0,
+      "spending": [],
+      "income": []
+    },
+    {
+      "id": "45ca",
+      "date": "2024-06-17",
+      "spending_total": 9000,
+      "income_total": 22000,
+      "spending": [
+        {
+          "method": "Card",
+          "category": "Food",
+          "title": "해장 국밥 ~,~",
+          "amount": 9000,
+          "memo": "술은 적당히 먹기,,,",
+          "place": "장터국밥"
+        }
+      ],
+      "income": [
+        {
+          "category": "Scholarship",
+          "title": "장학금이라니 !",
+          "amount": 20000,
+          "memo": ""
+        },
+        {
+          "category": "Secondhand Transaction",
+          "title": "당근 수입",
+          "amount": 2000,
+          "memo": "안신는 슬리퍼를 팔았다 !"
+        }
+      ]
+    },
+    {
+      "id": "13a1",
+      "date": "2024-06-18",
+      "spending_total": 3500,
+      "income_total": 0,
+      "spending": [
+        {
+          "method": "",
+          "category": "Food",
+          "title": "야삿츄",
+          "amount": 3500,
+          "memo": "아샷추는 한달에 2번만 먹기,,!",
+          "place": "메가MGC커피 어린이대공원역점"
+        }
+      ],
+      "income": []
+    },
+    {
+      "id": "57af",
+      "date": "2024-06-09",
+      "spending_total": 56000,
+      "income_total": 0,
+      "spending": [
+        {
+          "method": "Card",
+          "category": "Food",
+          "title": "데이트 S2",
+          "amount": 56000,
+          "memo": "",
+          "place": "이이요"
+        }
+      ],
+      "income": []
+    },
+    {
+      "id": "e7df",
+      "date": "2024-06-15",
+      "spending_total": 700000,
+      "income_total": 0,
+      "spending": [
+        {
+          "method": "Card",
+          "category": "Saving",
+          "title": "적금",
+          "amount": 700000,
+          "memo": "많이 모아서 이사가야지!",
+          "place": ""
+        }
+      ],
+      "income": []
+    },
+    {
+      "id": "3cbe",
+      "date": "2024-06-03",
+      "spending_total": 13500,
+      "income_total": 0,
+      "spending": [
+        {
+          "method": "Card",
+          "category": "Vehicle",
+          "title": "택시비",
+          "amount": 13500,
+          "memo": "늦잠 잤다ㅠㅠ",
+          "place": ""
+        }
+      ],
+      "income": []
     }
   ]
 }
