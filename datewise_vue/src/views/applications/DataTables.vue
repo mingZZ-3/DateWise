@@ -7,16 +7,16 @@
         <table ref="dataTable" id="datatable-search" class="table table-flush">
           <thead class="thead-light">
             <tr>
-              <th>Category</th>
-              <th>Title</th>
-              <th>Amount</th>
+              <th class="eng">Category</th>
+              <th class="eng">Title</th>
+              <th class="eng">Amount</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in data" :key="index" @click="emitter.emit('item_edit_click', { data, item })">
-              <td id="cate">{{ item.category }}</td>
+            <tr v-for="(item, index) in data" :key="index" @click="emitter.emit('item_edit_click', { item : item, index : item.index })">
+              <td id="cate"  class="cate">{{ item.category }}</td>
               <td id="title" :class="item.type === 'spending' ? 'spendingtitle' : 'incometitle'">{{ item.title }}</td>
-              <td id="amount">{{ item.amount }}원</td>
+              <td id="amount" class="eng">{{ item.amount.toLocaleString() }}</td>
             </tr>
           </tbody>
         </table>
@@ -40,13 +40,13 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Orbit&display=swap');
 
-.title {
+#title {
   font-family: "Orbit", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-.cate, .amount, th {
+.cate, .amount, th, .eng, #nolist {
     font-family: "DM Serif Text", serif;
     font-weight: bold;
     font-style: normal;

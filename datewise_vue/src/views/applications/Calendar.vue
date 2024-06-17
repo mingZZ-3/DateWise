@@ -267,6 +267,7 @@
             type="date"
             id="date"
             class="form-control"
+            disabled="true"
             v-model="editSpendingData.date"
           />
         </div>
@@ -391,6 +392,7 @@
             type="date"
             id="date"
             class="form-control"
+            disabled="true"
             v-model="editIncomeData.date"
           />
         </div>
@@ -499,6 +501,7 @@ let timeoutId = null;
 
 let calendar;
 const router = useRouter();
+let edit_index = -1;
 
 let currentMonthYear = ref("");
 
@@ -529,6 +532,7 @@ let model = {
 };
 
 let editSpendingData = ref({
+  id: "",
   paymentMethod: "",
   category: "",
   date: "",
@@ -539,6 +543,7 @@ let editSpendingData = ref({
 });
 
 let editIncomeData = ref({
+  id: "",
   category: "",
   date: "",
   title: "",
@@ -556,11 +561,8 @@ const emitter = internalInstance.appContext.config.globalProperties.emitter;
 
 const itemEditClick = (obj) => {
     // 모달 뜨고, 모달에 데이터 바인딩하기
-    console.log("data");
-    console.log(obj.data);
-    console.log("item");
-    console.log(obj.item);
     KakaoStore.setSearchList();
+    edit_index = obj.index;
     if (obj.item.type === "spending") {
       openEditSpendingModal(obj.item);
     } else {
@@ -611,6 +613,7 @@ const openAddIncomeModal = () => {
 };
 
 const openEditSpendingModal = (obj) => {
+  editSpendingData.value.id = obj.id;
   editSpendingData.value.date = obj.date;
   editSpendingData.value.method = obj.method;
   editSpendingData.value.category = obj.category;
@@ -619,17 +622,16 @@ const openEditSpendingModal = (obj) => {
   editSpendingData.value.amount = obj.amount;
   editSpendingData.value.memo = obj.memo;
   KakaoStore.setSearchList();
-
   showSpendingEditModal.value = true;
 };
 
 const openEditIncomeModal = (obj) => {
+  editIncomeData.value.id = obj.id;
   editIncomeData.value.date = obj.date;
   editIncomeData.value.category = obj.category
   editIncomeData.value.title = obj.title;
   editIncomeData.value.amount = obj.amount;
   editIncomeData.value.memo = obj.memo;
-
   showIncomeEditModal.value = true;
 };
 
@@ -640,10 +642,11 @@ const initEvents = async () => {
 
     for (let object of response.data) {
       const date = object.date;
+      console.log(object);
 
-      if(object.spending_total != 0){
+      if(object.spending_total != 0) {
         model.id = "S" + date;
-        model.title = -object.spending_total;
+        model.title = '-' + object.spending_total.toLocaleString();
         model.start = date;
         model.backgroundColor = "red";
 
@@ -652,7 +655,7 @@ const initEvents = async () => {
       
       if(object.income_total != 0){
         model.id = "I" + date;
-        model.title = "+" + object.income_total;
+        model.title = "+" + object.income_total.toLocaleString();
         model.start = date;
         model.backgroundColor = "";
 
@@ -716,7 +719,6 @@ function getFormattedDate() {
 
   return `${year}-${month}-${day}`;
 }
-
 
 const prev = () => {
   calendar.prev();
@@ -815,6 +817,7 @@ const saveSpendingEvent = async () => {
     model.backgroundColor = "red";
 
     calendar.addEvent(model);
+    emitter.emit('day_click', addSpendingData.value.date);
   }
 
   showAddSpendingModal.value = false;
@@ -872,15 +875,39 @@ const saveIncomeEvent = async () => {
     model.backgroundColor = "";
 
     calendar.addEvent(model);
+    emitter.emit('day_click', addIncomeData.value.date);
   }
 
   showAddIncomeModal.value = false;
 };
 
-const editSpendingEvent = () => {
+const editSpendingEvent = async () => {
   try {
+    const response = await getSingleData(editSpendingData.value.date);
+    let object = response;
+    
+    let editObject = {
+      "method": editSpendingData.value.method,
+      "category": editSpendingData.value.category,
+      "title": editSpendingData.value.title,
+      "amount": editSpendingData.value.amount,
+      "memo": editSpendingData.value.memo,
+      "place": editSpendingData.value.place
+    };
 
-    emitter.emit('day_click', editSpendingData.value.date);
+    object.spending_total -= object.spending[edit_index].amount;
+    object.spending.splice(edit_index, 1, editObject);
+    object.spending_total += editObject.amount;
+    
+    try{
+      await updateSingleData(object);
+      calendar.removeAllEvents();
+      initEvents();
+      edit_index = -1;
+      emitter.emit('day_click', editSpendingData.value.date);
+    } catch(error){
+      console.log(error);
+    }
   } catch (e) {
     console.log('Edit_spending', e);
   }
@@ -888,10 +915,31 @@ const editSpendingEvent = () => {
   showSpendingEditModal.value = false;
 };
 
-const editIncomeEvent = () => {
+const editIncomeEvent = async () => {
   try {
+    const response = await getSingleData(editIncomeData.value.date);
+    let object = response;
+    
+    let editObject = {
+      "category": editIncomeData.value.category,
+      "title": editIncomeData.value.title,
+      "amount": editIncomeData.value.amount,
+      "memo": editIncomeData.value.memo
+    };
 
-    emitter.emit('day_click', editIncomeData.value.date);
+    object.income_total -= object.income[edit_index].amount;
+    object.income.splice(edit_index, 1, editObject);
+    object.income_total += editObject.amount;
+    
+    try{
+      await updateSingleData(object);
+      calendar.removeAllEvents();
+      initEvents();
+      edit_index = -1;
+      emitter.emit('day_click', editIncomeData.value.date);
+    } catch(error){
+      console.log(error);
+    }
   } catch (e) {
     console.log('Edit_income', e);
   }
@@ -899,28 +947,52 @@ const editIncomeEvent = () => {
   showIncomeEditModal.value = false;
 };
 
-const deleteSpendingEvent = () => {
-  const eventId = editSpendingData.value.id;
-  const event = calendar.getEventById(eventId);
+const deleteSpendingEvent = async () => {
+  try {
+    const response = await getSingleData(editSpendingData.value.date);
+    let object = response;
 
-  if (event) {
-    event.remove();
-    showSpendingEditModal.value = false;
-  } else {
-    alert("Event not found.");
+    object.spending_total -= object.spending[edit_index].amount;
+    object.spending.splice(edit_index, 1);
+    
+    try{
+      await updateSingleData(object);
+      calendar.removeAllEvents();
+      initEvents();
+      edit_index = -1;
+      emitter.emit('day_click', editSpendingData.value.date);
+    } catch(error){
+      console.log(error);
+    }
+  } catch (e) {
+    console.log('delete_spending', e);
   }
+
+  showSpendingEditModal.value = false;
 };
 
-const deleteIncomeEvent = () => {
-  const eventId = editSpendingData.value.id;
-  const event = calendar.getEventById(eventId);
+const deleteIncomeEvent = async () => {
+  try {
+    const response = await getSingleData(editIncomeData.value.date);
+    let object = response;
 
-  if (event) {
-    event.remove();
-    showIncomeEditModal.value = false;
-  } else {
-    alert("Event not found.");
+    object.income_total -= object.income[edit_index].amount;
+    object.income.splice(edit_index, 1);
+    
+    try{
+      await updateSingleData(object);
+      calendar.removeAllEvents();
+      initEvents();
+      edit_index = -1;
+      emitter.emit('day_click', editIncomeData.value.date);
+    } catch(error){
+      console.log(error);
+    }
+  } catch (e) {
+    console.log('delete_income', e);
   }
+
+  showIncomeEditModal.value = false;
 };
 
 const goToSearch = () => {
