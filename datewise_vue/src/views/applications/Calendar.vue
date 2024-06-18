@@ -149,6 +149,9 @@
           v-model="addSpendingData.amount"
         />
       </div>
+      <div class="form-label" style="color:red" v-show="addSpendingData.isNegative">
+        Amount cannot be negative.
+      </div>
 
       <div class="form-group">
         <label for="memo" class="form-label">Memo</label>
@@ -177,8 +180,7 @@
       </template>
     </modal>
 
-    <modal v-model:show="showAddIncomeModal" 
-    modal-classes="modal-secondary">
+    <modal v-model:show="showAddIncomeModal" modal-classes="modal-secondary">
       <div class="form-group">
         <label for="date" class="form-label">Date</label>
         <input
@@ -230,6 +232,9 @@
           class="form-control"
           v-model="addIncomeData.amount"
         />
+      </div>
+      <div class="form-label" style="color:red" v-show="addIncomeData.isNegative">
+        Amount cannot be negative.
       </div>
 
       <div class="form-group">
@@ -348,6 +353,9 @@
             v-model="editSpendingData.amount"
           />
         </div>
+        <div class="form-label" style="color:red" v-show="editSpendingData.isNegative">
+          Amount cannot be negative.
+        </div>
 
         <div class="form-group">
           <label for="memo" class="form-label">Memo</label>
@@ -439,6 +447,9 @@
             v-model="editIncomeData.amount"
           />
         </div>
+        <div class="form-label" style="color:red" v-show="editIncomeData.isNegative">
+          Amount cannot be negative.
+        </div>
 
         <div class="form-group">
           <label for="memo" class="form-label">Memo</label>
@@ -513,6 +524,7 @@ let addSpendingData = ref({
   title: "",
   amount: 0,
   memo: "",
+  isNegative: false,
 });
 
 let addIncomeData = ref({
@@ -521,6 +533,7 @@ let addIncomeData = ref({
   title: "",
   amount: 0,
   memo: "",
+  isNegative: false,
 });
 
 let model = {
@@ -540,6 +553,7 @@ let editSpendingData = ref({
   title: "",
   amount: 0,
   memo: "",
+  isNegative: false,
 });
 
 let editIncomeData = ref({
@@ -596,6 +610,7 @@ const openAddSpendingModal = () => {
   addSpendingData.value.title = "";
   addSpendingData.value.amount = 0;
   addSpendingData.value.memo = "";
+  addSpendingData.value.isNegative = false;
   KakaoStore.setSearchList();
 
   showAddSpendingModal.value = true;
@@ -608,6 +623,7 @@ const openAddIncomeModal = () => {
   addIncomeData.value.title = "";
   addIncomeData.value.amount = 0;
   addIncomeData.value.memo = "";
+  addIncomeData.value.isNegative = false;
 
   showAddIncomeModal.value = true;
 };
@@ -621,6 +637,7 @@ const openEditSpendingModal = (obj) => {
   editSpendingData.value.title = obj.title;
   editSpendingData.value.amount = obj.amount;
   editSpendingData.value.memo = obj.memo;
+  editSpendingData.value.isNegative = false;
   KakaoStore.setSearchList();
   showSpendingEditModal.value = true;
 };
@@ -632,6 +649,7 @@ const openEditIncomeModal = (obj) => {
   editIncomeData.value.title = obj.title;
   editIncomeData.value.amount = obj.amount;
   editIncomeData.value.memo = obj.memo;
+  editIncomeData.value.isNegative = false;
   showIncomeEditModal.value = true;
 };
 
@@ -760,6 +778,11 @@ const selectPlaceFormKakao_edit = (item) => {
 };
 
 const saveSpendingEvent = async () => {
+  if(addSpendingData.value.amount <= 0){
+    addSpendingData.value.isNegative = true;
+    return;
+  }
+
   const findId = "S" + addSpendingData.value.date;
 
   try {
@@ -824,6 +847,11 @@ const saveSpendingEvent = async () => {
 };
 
 const saveIncomeEvent = async () => {
+  if(addIncomeData.value.amount <= 0){
+    addIncomeData.value.isNegative = true;
+    return;
+  }
+
   const findId = "I" + addIncomeData.value.date;
 
   try {
@@ -882,6 +910,11 @@ const saveIncomeEvent = async () => {
 };
 
 const editSpendingEvent = async () => {
+  if(editSpendingData.value.amount <= 0){
+    editSpendingData.value.isNegative = true;
+    return;
+  }
+  
   try {
     const response = await getSingleData(editSpendingData.value.date);
     let object = response;
@@ -916,6 +949,11 @@ const editSpendingEvent = async () => {
 };
 
 const editIncomeEvent = async () => {
+  if(editIncomeData.value.amount <= 0){
+    editIncomeData.value.isNegative = true;
+    return;
+  }
+
   try {
     const response = await getSingleData(editIncomeData.value.date);
     let object = response;
