@@ -1,5 +1,5 @@
 <template>
-  <div class="py-4 container">
+  <div class="container-fluid py-4 pb-5">
     <div class="row">
       <div class="col">
         <!-- Fullcalendar -->
