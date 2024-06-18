@@ -9,14 +9,18 @@
 
     <calendar id="calendar-table" class="ms-4 mt-n5"/>
 
-    <div class="container ms-4 mb-4">
-      <div class="card me-5">
-          <div class="card-header">
-              <h5 class="mb-0" style="color: #380A15; font-size: 30px;">Result</h5>
-          </div>
-          <DataTables :data="totallist"/>
+    <div class="container-fluid ms-4 mt-n4 pb-5">
+
+        <div class="card me-5">
+            <div class="card-header">
+                <h5 class="mb-0" style="color: #380A15; font-size: 30px;">Result</h5>
+            </div>
+            <DataTables :data="totallist"/>
       </div>
+
     </div>
+
+   
   </div>
 </template>
 
