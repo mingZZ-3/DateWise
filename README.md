@@ -17,7 +17,7 @@
 
 
 ## 🛠️ Stack
-* **Language** : JavaSript
+* **Language** : JavaScript
 * **Open API** : Kakao open api
 * **Library & Framewrok** : Vue.Js, axios, mitt, pinia, vue-router
 * **DB** : Json-server
